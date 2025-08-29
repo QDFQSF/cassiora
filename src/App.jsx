@@ -1,0 +1,416 @@
+import React, { useMemo, useState } from "react";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+
+/* ====== Design (couleurs / typos) ====== */
+const BRAND = {
+  gold: "#D4AF37",
+  black: "#000000",
+  olive: "#A7A587",
+  terra: "#C8775E",
+  ivory: "#F8F6F0",
+  offBlack: "#1a1a1a",
+};
+const WHATSAPP_NUMBER = "+33600000000"; // <-- remplace par le vrai numéro
+const PRO_EMAIL = "contact@cassiora.fr"; // <-- remplace par le vrai email
+
+function waLink(preset = "Bonjour Cassiora, je souhaite un devis.") {
+  const encoded = encodeURIComponent(preset);
+  return `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encoded}`;
+}
+function mailto(subject = "Demande de devis — Cassiora", body = "Bonjour,\n\nJe souhaite obtenir un devis.\n") {
+  return `mailto:${PRO_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+const GlobalHead = () => (
+  <>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>{`
+      :root{--cassiora-gold:${BRAND.gold};--cassiora-black:${BRAND.black};--cassiora-olive:${BRAND.olive};--cassiora-terra:${BRAND.terra};--cassiora-ivory:${BRAND.ivory}}
+      .font-title{font-family:'Cormorant Garamond',ui-serif,Georgia,serif}
+      .font-body{font-family:'Montserrat',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue','Noto Sans','Apple Color Emoji','Segoe UI Emoji',sans-serif}
+      html{scroll-behavior:auto}
+    `}</style>
+  </>
+);
+
+function Container({ children, className = "" }) {
+  return <div className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>;
+}
+
+/* ====== Header / Menu (liens vers vraies pages) ====== */
+function BrandBadge() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="relative h-9 w-9 rounded-full border-2" style={{ borderColor: BRAND.gold }}>
+        <div className="absolute inset-0 rounded-full" style={{ boxShadow: `0 0 0 2px ${BRAND.gold} inset` }} />
+      </div>
+      <div className="leading-tight">
+        <div className="font-title text-xl tracking-wide" style={{ color: BRAND.gold }}>CASSIORA</div>
+        <div className="font-body text-[10px] uppercase tracking-widest" style={{ color: BRAND.ivory }}>Traiteur</div>
+      </div>
+    </div>
+  );
+}
+function StickyNav() {
+  const items = [
+    { to: "/", label: "Accueil" },
+    { to: "/traiteur", label: "Traiteur" },
+    { to: "/box", label: "Box gourmande" },
+    { to: "/ateliers", label: "Ateliers" },
+    { to: "/livre", label: "Livre" },
+    { to: "/avis", label: "Avis clients" },
+    { to: "/contact", label: "Contact" },
+    { to: "/faq", label: "FAQ" },
+  ];
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-black/10 backdrop-blur bg-black/60">
+      <Container className="flex items-center justify-between py-3">
+        <Link to="/" className="flex items-center gap-3">
+          <BrandBadge />
+        </Link>
+        <nav className="hidden md:flex items-center gap-6">
+          {items.map((it) => (
+            <Link key={it.to} to={it.to} className="font-body text-sm text-white/90 hover:text-white">
+              {it.label}
+            </Link>
+          ))}
+          <a href={waLink("Bonjour Cassiora, j’aimerais commander / réserver.")} className="rounded-2xl px-4 py-2 text-sm font-semibold shadow-sm" style={{ background: BRAND.gold, color: BRAND.black }}>
+            Commander
+          </a>
+        </nav>
+        <button onClick={() => setOpen((o) => !o)} className="md:hidden text-white" aria-label="Menu">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </Container>
+      {open && (
+        <div className="md:hidden border-t border-white/10 bg-black/80">
+          <Container className="flex flex-col py-3">
+            {items.map((it) => (
+              <Link key={it.to} to={it.to} onClick={() => setOpen(false)} className="py-2 font-body text-white/90">
+                {it.label}
+              </Link>
+            ))}
+            <a href={waLink()} className="mt-2 rounded-xl px-4 py-2 text-center font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>
+              Commander
+            </a>
+          </Container>
+        </div>
+      )}
+    </header>
+  );
+}
+
+/* ====== Sections réutilisables ====== */
+function Hero() {
+  return (
+    <section className="relative isolate">
+      <div className="absolute inset-0 -z-10" style={{ background: `linear-gradient(180deg, ${BRAND.offBlack}, #000)` }} />
+      <Container className="grid gap-10 py-16 lg:grid-cols-2 lg:items-center">
+        <div>
+          <h1 className="font-title text-4xl sm:text-5xl text-white">Traiteur artisanal, cuisine généreuse</h1>
+          <p className="mt-4 font-body text-white/80">Cassiora crée des expériences gourmandes sur-mesure : événements, box prêtes à savourer et ateliers conviviaux.</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link to="/traiteur" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Découvrir le traiteur</Link>
+            <Link to="/box" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Box gourmande</Link>
+          </div>
+        </div>
+        <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/10">
+          <img alt="Cassiora — création traiteur" className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1600&auto=format&fit=crop" />
+        </div>
+      </Container>
+    </section>
+  );
+}
+function SectionShell({ eyebrow, title, intro, children, tone = "light" }) {
+  const bg = tone === "light" ? BRAND.ivory : "#0a0a0a";
+  const fg = tone === "light" ? BRAND.offBlack : "#f5f5f5";
+  return (
+    <section style={{ background: bg, color: fg }} className="py-16">
+      <Container>
+        <div className="mb-8">
+          <div className="font-body text-xs uppercase tracking-widest" style={{ color: BRAND.olive }}>{eyebrow}</div>
+          <h2 className="font-title text-3xl mt-2">{title}</h2>
+          {intro && <p className="font-body mt-3 max-w-2xl text-base/relaxed text-black/70">{intro}</p>}
+        </div>
+        {children}
+      </Container>
+    </section>
+  );
+}
+function PhotoMasonry({ urls = [] }) {
+  return (
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]"><div className="grid grid-cols-1 gap-4">
+      {urls.map((src, i) => (<img key={i} src={src} alt="Cassiora" className="mb-4 w-full break-inside-avoid rounded-2xl shadow" />))}
+    </div></div>
+  );
+}
+function PricingTable({ items }) {
+  return (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((p, i) => (
+        <div key={i} className="rounded-2xl border p-6 shadow-sm bg-white" style={{ borderColor: BRAND.olive + "55" }}>
+          <div className="font-title text-xl">{p.title}</div>
+          <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
+          <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>{p.price}</div>
+          {p.note && <div className="font-body mt-2 text-xs text-black/60">{p.note}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+function SimpleMenu({ groups }) {
+  return (
+    <div className="grid gap-8 sm:grid-cols-2">
+      {groups.map((g, i) => (
+        <div key={i} className="rounded-2xl bg-white p-6 shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+          <h3 className="font-title text-xl" style={{ color: BRAND.gold }}>{g.name}</h3>
+          <ul className="mt-3 space-y-2 font-body text-sm">
+            {g.items.map((it, j) => (<li key={j} className="flex items-start justify-between gap-4"><span>{it.name}</span>{it.price && <span className="text-black/60">{it.price}</span>}</li>))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+function CTADevis({ label = "Demande de devis" }) {
+  return (
+    <div className="mt-8 flex flex-wrap gap-3">
+      <a href={waLink("Bonjour Cassiora, je souhaite un devis pour un événement.")} className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>{label} (WhatsApp)</a>
+      <a href={mailto()} className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>{label} (Email)</a>
+    </div>
+  );
+}
+
+/* ====== Pages ====== */
+function Traiteur() {
+  const photos = [
+    "https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1521389508051-d7ffb5dc8bbf?q=80&w=1200&auto=format&fit=crop",
+  ];
+  const pricing = [
+    { title: "Cocktail dînatoire", desc: "Bouchées salées & sucrées, service au plateau", price: "à partir de 22€/pers" },
+    { title: "Buffet froid", desc: "Salades, charcuteries, fromages, desserts", price: "à partir de 18€/pers" },
+    { title: "Menu sur-mesure", desc: "Événements privés & pros", price: "sur devis" },
+  ];
+  const menu = [
+    { name: "Pièces salées", items: [{ name: "Mini focaccia mortadelle & pistache" },{ name: "Tartare de saumon, citron confit" },{ name: "Arancini parmesan" }] },
+    { name: "Douceurs", items: [{ name: "Tiramisu noisette" },{ name: "Financiers agrumes" },{ name: "Cheesecake fruits rouges" }] },
+  ];
+  return (
+    <SectionShell eyebrow="Prestations" title="Traiteur" intro="Photos d'inspiration, grilles tarifaires indicatives et exemple de menus. Tout est personnalisable selon votre événement.">
+      <PhotoMasonry urls={photos} />
+      <div className="mt-10"><PricingTable items={pricing} /></div>
+      <div className="mt-10"><SimpleMenu groups={menu} /></div>
+      <CTADevis />
+    </SectionShell>
+  );
+}
+function BoxGourmande() {
+  const boxes = [
+    { title: "Brunch pour 2", desc: "Viennoiseries, granola maison, fruits, boisson", price: "29€" },
+    { title: "Apéro d'auteur", desc: "Sélection salée + douceurs", price: "39€" },
+    { title: "Box événement", desc: "Format 6 à 10 pers.", price: "sur devis" },
+  ];
+  const photos = [
+    "https://images.unsplash.com/photo-1495546968767-f0573cca821e?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1200&auto=format&fit=crop",
+  ];
+  return (
+    <SectionShell eyebrow="À emporter / Offrir" title="Box gourmande" intro="Des compositions prêtes à savourer — à récupérer ou livrées selon zone. Options végétariennes & sans porc.">
+      <PhotoMasonry urls={photos} />
+      <div className="mt-10"><PricingTable items={boxes} /></div>
+      <CTADevis />
+    </SectionShell>
+  );
+}
+function MiniCalendar({ onChange }) {
+  const today = useMemo(() => new Date(), []);
+  const [month, setMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const start = new Date(month.getFullYear(), month.getMonth(), 1);
+  const end = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+  const days = Array.from({ length: end.getDate() }, (_, i) => i + 1);
+  return (
+    <div className="rounded-2xl border p-4 bg-white" style={{ borderColor: BRAND.olive + "55" }}>
+      <div className="flex items-center justify-between">
+        <button className="px-2 py-1 rounded" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}>«</button>
+        <div className="font-body font-semibold">{month.toLocaleString('fr-FR', { month: 'long', year: 'numeric' })}</div>
+        <button className="px-2 py-1 rounded" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}>»</button>
+      </div>
+      <div className="mt-3 grid grid-cols-7 gap-2 text-center text-xs">
+        {["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"].map(d => <div key={d} className="text-black/60">{d}</div>)}
+        {Array.from({length: (start.getDay()+6)%7}).map((_,i)=>(<div key={'sp'+i}></div>))}
+        {days.map(d => (<button key={d} onClick={() => onChange?.(new Date(month.getFullYear(), month.getMonth(), d))} className="rounded-lg py-2 hover:ring-2" style={{ background: BRAND.ivory }}>{d}</button>))}
+      </div>
+    </div>
+  );
+}
+function Ateliers() {
+  const [selection, setSelection] = useState({ type: "Pâtisserie", date: null });
+  const categories = [
+    { name: "Pâtisserie", desc: "Macarons, choux, entremets" },
+    { name: "Cuisine du monde", desc: "Italie, Liban, Asie" },
+    { name: "Parent/Enfant", desc: "Moments ludiques & pédagogiques" },
+  ];
+  return (
+    <SectionShell eyebrow="Apprendre & partager" title="Ateliers" intro="Choisissez une thématique et réservez une date. Le paiement s'effectuera sur place (site vitrine).">
+      <div className="grid gap-8 lg:grid-cols-3">
+        <div className="space-y-3">
+          {categories.map((c) => (
+            <button key={c.name} onClick={() => setSelection((s) => ({ ...s, type: c.name }))} className="w-full rounded-2xl border p-4 text-left hover:shadow"
+              style={{ borderColor: selection.type === c.name ? BRAND.gold : BRAND.olive + "55", background: selection.type === c.name ? BRAND.ivory : "white" }}>
+              <div className="font-title text-lg">{c.name}</div>
+              <div className="font-body text-sm text-black/70">{c.desc}</div>
+            </button>
+          ))}
+        </div>
+        <div className="lg:col-span-2 space-y-4">
+          <MiniCalendar onChange={(d) => setSelection((s) => ({ ...s, date: d }))} />
+          <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+            <div className="font-title text-xl" style={{ color: BRAND.gold }}>Votre réservation</div>
+            <div className="font-body mt-2 text-sm">
+              <div>Atelier: <b>{selection.type}</b></div>
+              <div>Date: <b>{selection.date ? selection.date.toLocaleDateString('fr-FR') : "(à choisir)"}</b></div>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href={waLink(`Bonjour, je souhaite réserver l'atelier ${selection.type} le ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(date à préciser)'}.`)} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Réserver par WhatsApp</a>
+              <a href={mailto("Réservation atelier Cassiora", `Bonjour,\n\nJe souhaite réserver l'atelier ${selection.type}.\nDate: ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(à préciser)'}.\nNombre de personnes: ____.\n`)} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Réserver par Email</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+function Livre() {
+  const extracts = [
+    { title: "Tarte rustique abricot-romarin", text: "Une pâte croustillante, des abricots confits au miel et une pointe de romarin…" },
+    { title: "Focaccia aux tomates confites", text: "Hydratation généreuse, huile d'olive parfumée et sel de Camargue." },
+    { title: "Crème citron basilic", text: "Un équilibre acidulé tout en douceur pour tartes & verrines." },
+    { title: "Poulet zaatar yaourt", text: "Marinade express pour grillades parfumées et tendres." },
+  ];
+  return (
+    <SectionShell eyebrow="Éditions Cassiora" title="Livre de recettes" intro="Découvrez quelques extraits du livre. Version e-book et imprimée disponibles.">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {extracts.map((ex, i) => (
+          <article key={i} className="rounded-2xl bg-white p-5 shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+            <h3 className="font-title text-lg" style={{ color: BRAND.gold }}>{ex.title}</h3>
+            <p className="font-body mt-2 text-sm text-black/70">{ex.text}</p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <a href="#" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.terra, color: 'white' }}>Acheter l'e-book</a>
+        <a href="#" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.terra, color: BRAND.terra }}>Acheter la version papier</a>
+      </div>
+    </SectionShell>
+  );
+}
+function AvisClients() {
+  const [avis, setAvis] = useState([
+    { name: "Jade M.", text: "Buffet magnifique, tout le monde s'est régalé !", note: 5 },
+    { name: "Thomas B.", text: "Organisation impeccable et saveurs au top.", note: 5 },
+  ]);
+  const [form, setForm] = useState({ name: "", text: "", note: 5 });
+  const add = () => {
+    if (!form.name || !form.text) return alert("Merci de compléter nom + avis.");
+    setAvis((a) => [{ ...form }, ...a]);
+    setForm({ name: "", text: "", note: 5 });
+  };
+  return (
+    <SectionShell eyebrow="Ils nous font confiance" title="Avis clients" intro="Laissez un témoignage — en attendant l'intégration Google / Facebook Reviews.">
+      <div className="grid gap-8 lg:grid-cols-3">
+        <div className="lg:col-span-2 grid gap-4">
+          {avis.map((a, i) => (
+            <div key={i} className="rounded-2xl bg-white p-5 shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+              <div className="font-body text-sm text-black/60">{"★".repeat(a.note)}{"☆".repeat(5 - a.note)}</div>
+              <div className="font-title">{a.name}</div>
+              <p className="font-body text-sm mt-1">{a.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl bg-white p-6 ring-1 h-fit" style={{ ringColor: BRAND.olive + "55" }}>
+          <div className="font-title text-xl" style={{ color: BRAND.gold }}>Ajouter un avis</div>
+          <label className="font-body text-sm mt-3 block">Nom
+            <input value={form.name} onChange={(e)=>setForm({...form,name:e.target.value})} className="mt-1 w-full rounded-xl border p-2" />
+          </label>
+          <label className="font-body text-sm mt-3 block">Votre avis
+            <textarea value={form.text} onChange={(e)=>setForm({...form,text:e.target.value})} rows={4} className="mt-1 w-full rounded-xl border p-2" />
+          </label>
+          <label className="font-body text-sm mt-3 block">Note
+            <input type="number" min={1} max={5} value={form.note} onChange={(e)=>setForm({...form,note:parseInt(e.target.value||'5')})} className="mt-1 w-full rounded-xl border p-2" />
+          </label>
+          <button onClick={add} className="mt-4 w-full rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Publier</button>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+function Contact() {
+  return (
+    <SectionShell eyebrow="Prendre contact" title="Contact" intro="Parlez-nous de votre projet :">
+      <div className="grid gap-8 sm:grid-cols-2">
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+          <div className="font-body text-sm">Téléphone</div>
+          <a href={`tel:${WHATSAPP_NUMBER}`} className="font-title text-2xl">{WHATSAPP_NUMBER}</a>
+          <div className="mt-4 font-body text-sm">Email</div>
+          <a href={`mailto:${PRO_EMAIL}`} className="font-title text-xl">{PRO_EMAIL}</a>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href={waLink()} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Écrire sur WhatsApp</a>
+            <a href={`mailto:${PRO_EMAIL}`} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Écrire un email</a>
+          </div>
+          <div className="mt-6 font-body text-sm text-black/70">Réseaux sociaux</div>
+          <div className="mt-2 flex gap-4">
+            <a href="#" className="underline">Instagram</a>
+            <a href="#" className="underline">Facebook</a>
+            <a href="#" className="underline">TikTok</a>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+          <div className="font-title text-xl" style={{ color: BRAND.gold }}>Formulaire express</div>
+          <form action={mailto("Demande via formulaire Cassiora")} method="post" className="mt-3 grid gap-3">
+            <input name="nom" placeholder="Votre nom" className="rounded-xl border p-2" />
+            <input name="email" placeholder="Votre email" className="rounded-xl border p-2" />
+            <textarea name="message" placeholder="Votre message" rows={5} className="rounded-xl border p-2" />
+            <button type="submit" className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.terra, color: 'white' }}>Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+function Home() { return (<><Hero /></>); }
+
+/* ====== App avec ROUTES ====== */
+export default function App() {
+  return (
+    <div className="min-h-[100vh]" style={{ background: "#000" }}>
+      <GlobalHead />
+      <BrowserRouter>
+        <StickyNav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/traiteur" element={<Traiteur />} />
+          <Route path="/box" element={<BoxGourmande />} />
+          <Route path="/ateliers" element={<Ateliers />} />
+          <Route path="/livre" element={<Livre />} />
+          <Route path="/avis" element={<AvisClients />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={
+            <SectionShell eyebrow="Questions fréquentes" title="FAQ">
+              {/* Tu peux remettre ici ta FAQ plus tard */}
+              <p className="font-body">Rubrique en construction.</p>
+            </SectionShell>
+          } />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <footer className="border-t border-white/10 bg-black py-8 text-center text-white/60 font-body">
+          © {new Date().getFullYear()} Cassiora — Traiteur. Tous droits réservés.
+        </footer>
+      </BrowserRouter>
+    </div>
+  );
+}
