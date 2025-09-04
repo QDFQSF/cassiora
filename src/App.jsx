@@ -213,20 +213,19 @@ function Traiteur() {
   );
 }
 function BoxGourmande() {
-  const boxes = [
-    { title: "Brunch pour 2", desc: "Viennoiseries, granola maison, fruits, boisson", price: "29€" },
-    { title: "Apéro d'auteur", desc: "Sélection salée + douceurs", price: "39€" },
-    { title: "Box événement", desc: "Format 6 à 10 pers.", price: "sur devis" },
-  ];
-  const photos = [
-    "https://images.unsplash.com/photo-1495546968767-f0573cca821e?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1200&auto=format&fit=crop",
-  ];
+  const list = data.boxes;
   return (
-    <SectionShell eyebrow="À emporter / Offrir" title="Box gourmande" intro="Des compositions prêtes à savourer — à récupérer ou livrées selon zone. Options végétariennes & sans porc.">
-      <PhotoMasonry urls={photos} />
-      <div className="mt-10"><PricingTable items={boxes} /></div>
+    <SectionShell eyebrow="À emporter / Offrir" title="Box gourmande" intro="Des compositions prêtes à savourer — à récupérer ou livrées selon zone. Options végétariennes & sans porc sur demande.">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {list.map((b) => (
+          <Link key={b.slug} to={`/box/${b.slug}`} className="rounded-2xl bg-white p-6 shadow ring-1 hover:shadow-lg" style={{ ringColor: BRAND.olive + '55' }}>
+            <div className="font-title text-xl" style={{ color: BRAND.gold }}>{b.titre}</div>
+            <p className="font-body text-sm text-black/70 mt-1">{b.theme} — {b.prix}</p>
+            <p className="font-body text-xs text-black/60 mt-2">Tailles : {b.tailles.join(', ')}</p>
+          </Link>
+        ))}
+      </div>
+      <p className="font-body text-sm text-black/60 mt-4">{data.noteBoxes}</p>
       <CTADevis />
     </SectionShell>
   );
@@ -253,35 +252,26 @@ function MiniCalendar({ onChange }) {
   );
 }
 function Ateliers() {
-  const [selection, setSelection] = useState({ type: "Pâtisserie", date: null });
-  const categories = [
-    { name: "Pâtisserie", desc: "Macarons, choux, entremets" },
-    { name: "Cuisine du monde", desc: "Italie, Liban, Asie" },
-    { name: "Parent/Enfant", desc: "Moments ludiques & pédagogiques" },
-  ];
+  const [selection, setSelection] = useState({ type: data.ateliers[0]?.titre || "Atelier", date: null });
   return (
-    <SectionShell eyebrow="Apprendre & partager" title="Ateliers" intro="Choisissez une thématique et réservez une date. Le paiement s'effectuera sur place (site vitrine).">
+    <SectionShell eyebrow="Apprendre & partager" title="Ateliers" intro="Choisissez une thématique et réservez une date. Paiement sur place.">
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-3">
-          {categories.map((c) => (
-            <button key={c.name} onClick={() => setSelection((s) => ({ ...s, type: c.name }))} className="w-full rounded-2xl border p-4 text-left hover:shadow"
-              style={{ borderColor: selection.type === c.name ? BRAND.gold : BRAND.olive + "55", background: selection.type === c.name ? BRAND.ivory : "white" }}>
-              <div className="font-title text-lg">{c.name}</div>
+          {data.ateliers.map((c) => (
+            <Link key={c.slug} to={`/ateliers/${c.slug}`} className="block rounded-2xl border p-4 hover:shadow" style={{ borderColor: BRAND.olive+'55' }}>
+              <div className="font-title text-lg">{c.titre}</div>
               <div className="font-body text-sm text-black/70">{c.desc}</div>
-            </button>
+            </Link>
           ))}
         </div>
         <div className="lg:col-span-2 space-y-4">
           <MiniCalendar onChange={(d) => setSelection((s) => ({ ...s, date: d }))} />
           <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
-            <div className="font-title text-xl" style={{ color: BRAND.gold }}>Votre réservation</div>
-            <div className="font-body mt-2 text-sm">
-              <div>Atelier: <b>{selection.type}</b></div>
-              <div>Date: <b>{selection.date ? selection.date.toLocaleDateString('fr-FR') : "(à choisir)"}</b></div>
-            </div>
+            <div className="font-title text-xl" style={{ color: BRAND.gold }}>Pré-réserver une date</div>
+            <div className="font-body mt-2 text-sm">Date choisie : <b>{selection.date ? selection.date.toLocaleDateString('fr-FR') : "(à choisir)"}</b></div>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a href={waLink(`Bonjour, je souhaite réserver l'atelier ${selection.type} le ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(date à préciser)'}.`)} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Réserver par WhatsApp</a>
-              <a href={mailto("Réservation atelier Cassiora", `Bonjour,\n\nJe souhaite réserver l'atelier ${selection.type}.\nDate: ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(à préciser)'}.\nNombre de personnes: ____.\n`)} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Réserver par Email</a>
+              <a href={waLink(`Bonjour, je souhaite réserver un atelier le ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(date à préciser)'}.`)} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Réserver par WhatsApp</a>
+              <a href={mailto("Réservation atelier Cassiora", `Bonjour,\n\nJe souhaite réserver un atelier.\nDate: ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(à préciser)'}.\nNombre de personnes: ____.\n`)} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Réserver par Email</a>
             </div>
           </div>
         </div>
@@ -290,33 +280,40 @@ function Ateliers() {
   );
 }
 function Livre() {
-  const extracts = [
-    { title: "Tarte rustique abricot-romarin", text: "Une pâte croustillante, des abricots confits au miel et une pointe de romarin…" },
-    { title: "Focaccia aux tomates confites", text: "Hydratation généreuse, huile d'olive parfumée et sel de Camargue." },
-    { title: "Crème citron basilic", text: "Un équilibre acidulé tout en douceur pour tartes & verrines." },
-    { title: "Poulet zaatar yaourt", text: "Marinade express pour grillades parfumées et tendres." },
-  ];
+  const [open, setOpen] = useState(null); // slug ou null
   return (
-    <SectionShell eyebrow="Éditions Cassiora" title="Livre de recettes" intro="Découvrez quelques extraits du livre. Version e-book et imprimée disponibles.">
+    <SectionShell eyebrow="Éditions Cassiora" title="Livre de recettes" intro={data.livre.intro}>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {extracts.map((ex, i) => (
-          <article key={i} className="rounded-2xl bg-white p-5 shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
-            <h3 className="font-title text-lg" style={{ color: BRAND.gold }}>{ex.title}</h3>
-            <p className="font-body mt-2 text-sm text-black/70">{ex.text}</p>
-          </article>
+        {data.livre.recettes.map((ex) => (
+          <button key={ex.slug} onClick={()=>setOpen(ex.slug)} className="text-left rounded-2xl bg-white p-5 shadow ring-1 hover:shadow-lg" style={{ ringColor: BRAND.olive + "55" }}>
+            <h3 className="font-title text-lg" style={{ color: BRAND.gold }}>{ex.titre}</h3>
+            <p className="font-body mt-2 text-sm text-black/70">{ex.extrait}</p>
+          </button>
         ))}
       </div>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <a href="#" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.terra, color: 'white' }}>Acheter l'e-book</a>
-        <a href="#" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.terra, color: BRAND.terra }}>Acheter la version papier</a>
-      </div>
+
+      {open && (() => {
+        const r = data.livre.recettes.find(x=>x.slug===open);
+        return (
+          <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4" onClick={()=>setOpen(null)}>
+            <div className="max-w-2xl w-full rounded-2xl bg-white p-6 shadow" onClick={e=>e.stopPropagation()}>
+              <div className="flex justify-between items-center">
+                <h3 className="font-title text-2xl">{r.titre}</h3>
+                <button onClick={()=>setOpen(null)} className="font-body">✕</button>
+              </div>
+              {r.photo && <img src={r.photo} alt="" className="mt-3 rounded-xl" />}
+              <p className="font-body mt-4 text-sm leading-relaxed whitespace-pre-wrap">{r.texteComplet}</p>
+            </div>
+          </div>
+        );
+      })()}
     </SectionShell>
   );
 }
 function AvisClients() {
   const [avis, setAvis] = useState([
-    { name: "Jade M.", text: "Buffet magnifique, tout le monde s'est régalé !", note: 5 },
-    { name: "Thomas B.", text: "Organisation impeccable et saveurs au top.", note: 5 },
+    { name: "Jade M.", text: "Buffet magnifique, tout le monde s'est régalé !", note: 5, reply: "" },
+    { name: "Thomas B.", text: "Organisation impeccable et saveurs au top.", note: 5, reply: "" }
   ]);
   const [form, setForm] = useState({ name: "", text: "", note: 5 });
   const add = () => {
@@ -410,7 +407,39 @@ function TraiteurDetail() {
     </SectionShell>
   );
 }
-
+function BoxDetail() {
+  const { slug } = useParams();
+  const b = data.boxes.find(x => x.slug === slug);
+  if (!b) return <SectionShell title="Box introuvable"><p className="font-body">Cette box n'existe pas.</p></SectionShell>;
+  return (
+    <SectionShell eyebrow="Box gourmande" title={b.titre} intro={`${b.theme} — ${b.prix}`}>
+      {b.photos?.length ? <PhotoMasonry urls={b.photos} /> : null}
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+          <div className="font-title text-xl" style={{ color: BRAND.gold }}>Contenu</div>
+          <ul className="font-body mt-2 space-y-1 text-sm">{b.contenu.map((i,idx)=><li key={idx}>• {i}</li>)}</ul>
+        </div>
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+          <div className="font-title text-xl" style={{ color: BRAND.gold }}>Tailles & conservation</div>
+          <p className="font-body text-sm mt-2"><b>Tailles :</b> {b.tailles.join(', ')}</p>
+          <p className="font-body text-sm mt-2"><b>Conservation :</b> {b.conservation}</p>
+        </div>
+      </div>
+      <CTADevis />
+    </SectionShell>
+  );
+}
+function AtelierDetail() {
+  const { slug } = useParams();
+  const a = data.ateliers.find(x=>x.slug===slug);
+  if(!a) return <SectionShell title="Atelier introuvable"><p className="font-body">Cet atelier n'existe pas.</p></SectionShell>;
+  return (
+    <SectionShell eyebrow="Ateliers" title={a.titre} intro={a.desc}>
+      {a.photos?.length ? <PhotoMasonry urls={a.photos} /> : null}
+      <CTADevis label="Demander des infos" />
+    </SectionShell>
+  );
+}
 /* ====== App avec ROUTES ====== */
 export default function App() {
   return (
@@ -419,6 +448,8 @@ export default function App() {
       <BrowserRouter>
         <StickyNav />
         <Routes>
+          <Route path="/ateliers/:slug" element={<AtelierDetail />} />
+          <Route path="/box/:slug" element={<BoxDetail />} />
           <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
           <Route path="/" element={<Home />} />
           <Route path="/traiteur" element={<Traiteur />} />
