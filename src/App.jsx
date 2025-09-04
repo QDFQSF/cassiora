@@ -1,3 +1,4 @@
+// src/App.jsx
 import data from "./content/site.json";
 import React, { useMemo, useState } from "react";
 import { Routes, Route, Link, useParams } from "react-router-dom";
@@ -18,14 +19,20 @@ function waLink(preset = "Bonjour Cassiora, je souhaite un devis.") {
   const encoded = encodeURIComponent(preset);
   return `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}?text=${encoded}`;
 }
-function mailto(subject = "Demande de devis — Cassiora", body = "Bonjour,\n\nJe souhaite obtenir un devis.\n") {
+function mailto(
+  subject = "Demande de devis — Cassiora",
+  body = "Bonjour,\n\nJe souhaite obtenir un devis.\n"
+) {
   return `mailto:${PRO_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 const GlobalHead = () => (
   <>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>{`
       :root{--cassiora-gold:${BRAND.gold};--cassiora-black:${BRAND.black};--cassiora-olive:${BRAND.olive};--cassiora-terra:${BRAND.terra};--cassiora-ivory:${BRAND.ivory}}
       .font-title{font-family:'Cormorant Garamond',ui-serif,Georgia,serif}
@@ -77,7 +84,11 @@ function StickyNav() {
               {it.label}
             </Link>
           ))}
-          <a href={waLink("Bonjour Cassiora, j’aimerais commander / réserver.")} className="rounded-2xl px-4 py-2 text-sm font-semibold shadow-sm" style={{ background: BRAND.gold, color: BRAND.black }}>
+          <a
+            href={waLink("Bonjour Cassiora, j’aimerais commander / réserver.")}
+            className="rounded-2xl px-4 py-2 text-sm font-semibold shadow-sm"
+            style={{ background: BRAND.gold, color: BRAND.black }}
+          >
             Commander
           </a>
         </nav>
@@ -110,7 +121,6 @@ function Hero() {
       <div className="absolute inset-0 -z-10" style={{ background: `linear-gradient(180deg, ${BRAND.offBlack}, #000)` }} />
       <Container className="grid gap-10 py-16 lg:grid-cols-2 lg:items-center">
         <div>
-          {/* logo */}
           {data.branding.logoUrl && (
             <img src={data.branding.logoUrl} alt="Cassiora" className="h-16 mb-4 object-contain" />
           )}
@@ -147,9 +157,11 @@ function SectionShell({ eyebrow, title, intro, children, tone = "light" }) {
 }
 function PhotoMasonry({ urls = [] }) {
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]"><div className="grid grid-cols-1 gap-4">
-      {urls.map((src, i) => (<img key={i} src={src} alt="Cassiora" className="mb-4 w-full break-inside-avoid rounded-2xl shadow" />))}
-    </div></div>
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+      <div className="grid grid-cols-1 gap-4">
+        {urls.map((src, i) => (<img key={i} src={src} alt="Cassiora" className="mb-4 w-full break-inside-avoid rounded-2xl shadow" />))}
+      </div>
+    </div>
   );
 }
 function PricingTable({ items }) {
@@ -173,7 +185,12 @@ function SimpleMenu({ groups }) {
         <div key={i} className="rounded-2xl bg-white p-6 shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
           <h3 className="font-title text-xl" style={{ color: BRAND.gold }}>{g.name}</h3>
           <ul className="mt-3 space-y-2 font-body text-sm">
-            {g.items.map((it, j) => (<li key={j} className="flex items-start justify-between gap-4"><span>{it.name}</span>{it.price && <span className="text-black/60">{it.price}</span>}</li>))}
+            {g.items.map((it, j) => (
+              <li key={j} className="flex items-start justify-between gap-4">
+                <span>{it.name}</span>
+                {it.price && <span className="text-black/60">{it.price}</span>}
+              </li>
+            ))}
           </ul>
         </div>
       ))}
@@ -188,19 +205,28 @@ function CTADevis({ label = "Demande de devis" }) {
     </div>
   );
 }
+
 /* ====== Pages ====== */
 function Traiteur() {
-  const photos = (data.traiteur.formules.flatMap(f => f.photos)).slice(0,3);
-  const pricing = data.traiteur.formules.map(f => ({
-    title: f.titre, desc: f.desc, price: f.prix, slug: f.slug
+  const photos = (data.traiteur.formules.flatMap((f) => f.photos)).slice(0, 3);
+  const pricing = data.traiteur.formules.map((f) => ({
+    title: f.titre,
+    desc: f.desc,
+    price: f.prix,
+    slug: f.slug,
   }));
   return (
     <SectionShell eyebrow="Prestations" title="Traiteur" intro="Photos d'inspiration, grilles tarifaires indicatives et exemple de menus. Tout est personnalisable selon votre événement.">
       <PhotoMasonry urls={photos} />
       <div className="mt-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {pricing.map(p => (
-            <Link key={p.title} to={`/traiteur/${p.slug}`} className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow" style={{ borderColor: BRAND.olive + '55' }}>
+          {pricing.map((p) => (
+            <Link
+              key={p.title}
+              to={`/traiteur/${p.slug}`}
+              className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
+              style={{ borderColor: BRAND.olive + "55" }}
+            >
               <div className="font-title text-xl">{p.title}</div>
               <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
               <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>{p.price}</div>
@@ -215,13 +241,24 @@ function Traiteur() {
 function BoxGourmande() {
   const list = data.boxes;
   return (
-    <SectionShell eyebrow="À emporter / Offrir" title="Box gourmande" intro="Des compositions prêtes à savourer — à récupérer ou livrées selon zone. Options végétariennes & sans porc sur demande.">
+    <SectionShell
+      eyebrow="À emporter / Offrir"
+      title="Box gourmande"
+      intro="Des compositions prêtes à savourer — à récupérer ou livrées selon zone. Options végétariennes & sans porc sur demande."
+    >
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((b) => (
-          <Link key={b.slug} to={`/box/${b.slug}`} className="rounded-2xl bg-white p-6 shadow ring-1 hover:shadow-lg" style={{ ringColor: BRAND.olive + '55' }}>
+          <Link
+            key={b.slug}
+            to={`/box/${b.slug}`}
+            className="rounded-2xl bg-white p-6 shadow ring-1 hover:shadow-lg"
+            style={{ ringColor: BRAND.olive + "55" }}
+          >
             <div className="font-title text-xl" style={{ color: BRAND.gold }}>{b.titre}</div>
-            <p className="font-body text-sm text-black/70 mt-1">{b.theme} — {b.prix}</p>
-            <p className="font-body text-xs text-black/60 mt-2">Tailles : {b.tailles.join(', ')}</p>
+            <p className="font-body text-sm text-black/70 mt-1">
+              {b.theme} — {b.prix}
+            </p>
+            <p className="font-body text-xs text-black/60 mt-2">Tailles : {b.tailles.join(", ")}</p>
           </Link>
         ))}
       </div>
@@ -240,13 +277,30 @@ function MiniCalendar({ onChange }) {
     <div className="rounded-2xl border p-4 bg-white" style={{ borderColor: BRAND.olive + "55" }}>
       <div className="flex items-center justify-between">
         <button className="px-2 py-1 rounded" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}>«</button>
-        <div className="font-body font-semibold">{month.toLocaleString('fr-FR', { month: 'long', year: 'numeric' })}</div>
+        <div className="font-body font-semibold">
+          {month.toLocaleString("fr-FR", { month: "long", year: "numeric" })}
+        </div>
         <button className="px-2 py-1 rounded" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}>»</button>
       </div>
       <div className="mt-3 grid grid-cols-7 gap-2 text-center text-xs">
-        {["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"].map(d => <div key={d} className="text-black/60">{d}</div>)}
-        {Array.from({length: (start.getDay()+6)%7}).map((_,i)=>(<div key={'sp'+i}></div>))}
-        {days.map(d => (<button key={d} onClick={() => onChange?.(new Date(month.getFullYear(), month.getMonth(), d))} className="rounded-lg py-2 hover:ring-2" style={{ background: BRAND.ivory }}>{d}</button>))}
+        {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((d) => (
+          <div key={d} className="text-black/60">
+            {d}
+          </div>
+        ))}
+        {Array.from({ length: (start.getDay() + 6) % 7 }).map((_, i) => (
+          <div key={"sp" + i}></div>
+        ))}
+        {days.map((d) => (
+          <button
+            key={d}
+            onClick={() => onChange?.(new Date(month.getFullYear(), month.getMonth(), d))}
+            className="rounded-lg py-2 hover:ring-2"
+            style={{ background: BRAND.ivory }}
+          >
+            {d}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -258,7 +312,7 @@ function Ateliers() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-3">
           {data.ateliers.map((c) => (
-            <Link key={c.slug} to={`/ateliers/${c.slug}`} className="block rounded-2xl border p-4 hover:shadow" style={{ borderColor: BRAND.olive+'55' }}>
+            <Link key={c.slug} to={`/ateliers/${c.slug}`} className="block rounded-2xl border p-4 hover:shadow" style={{ borderColor: BRAND.olive + "55" }}>
               <div className="font-title text-lg">{c.titre}</div>
               <div className="font-body text-sm text-black/70">{c.desc}</div>
             </Link>
@@ -268,10 +322,33 @@ function Ateliers() {
           <MiniCalendar onChange={(d) => setSelection((s) => ({ ...s, date: d }))} />
           <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
             <div className="font-title text-xl" style={{ color: BRAND.gold }}>Pré-réserver une date</div>
-            <div className="font-body mt-2 text-sm">Date choisie : <b>{selection.date ? selection.date.toLocaleDateString('fr-FR') : "(à choisir)"}</b></div>
+            <div className="font-body mt-2 text-sm">
+              Date choisie : <b>{selection.date ? selection.date.toLocaleDateString("fr-FR") : "(à choisir)"}</b>
+            </div>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a href={waLink(`Bonjour, je souhaite réserver un atelier le ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(date à préciser)'}.`)} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Réserver par WhatsApp</a>
-              <a href={mailto("Réservation atelier Cassiora", `Bonjour,\n\nJe souhaite réserver un atelier.\nDate: ${selection.date ? selection.date.toLocaleDateString('fr-FR') : '(à préciser)'}.\nNombre de personnes: ____.\n`)} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Réserver par Email</a>
+              <a
+                href={waLink(
+                  `Bonjour, je souhaite réserver un atelier le ${
+                    selection.date ? selection.date.toLocaleDateString("fr-FR") : "(date à préciser)"
+                  }.`
+                )}
+                className="rounded-xl px-4 py-2 font-semibold"
+                style={{ background: BRAND.gold, color: BRAND.black }}
+              >
+                Réserver par WhatsApp
+              </a>
+              <a
+                href={mailto(
+                  "Réservation atelier Cassiora",
+                  `Bonjour,\n\nJe souhaite réserver un atelier.\nDate: ${
+                    selection.date ? selection.date.toLocaleDateString("fr-FR") : "(à préciser)"
+                  }.\nNombre de personnes: ____.\n`
+                )}
+                className="rounded-xl px-4 py-2 font-semibold border"
+                style={{ borderColor: BRAND.gold, color: BRAND.gold }}
+              >
+                Réserver par Email
+              </a>
             </div>
           </div>
         </div>
@@ -285,35 +362,41 @@ function Livre() {
     <SectionShell eyebrow="Éditions Cassiora" title="Livre de recettes" intro={data.livre.intro}>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {data.livre.recettes.map((ex) => (
-          <button key={ex.slug} onClick={()=>setOpen(ex.slug)} className="text-left rounded-2xl bg-white p-5 shadow ring-1 hover:shadow-lg" style={{ ringColor: BRAND.olive + "55" }}>
+          <button
+            key={ex.slug}
+            onClick={() => setOpen(ex.slug)}
+            className="text-left rounded-2xl bg-white p-5 shadow ring-1 hover:shadow-lg"
+            style={{ ringColor: BRAND.olive + "55" }}
+          >
             <h3 className="font-title text-lg" style={{ color: BRAND.gold }}>{ex.titre}</h3>
             <p className="font-body mt-2 text-sm text-black/70">{ex.extrait}</p>
           </button>
         ))}
       </div>
 
-      {open && (() => {
-        const r = data.livre.recettes.find(x=>x.slug===open);
-        return (
-          <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4" onClick={()=>setOpen(null)}>
-            <div className="max-w-2xl w-full rounded-2xl bg-white p-6 shadow" onClick={e=>e.stopPropagation()}>
-              <div className="flex justify-between items-center">
-                <h3 className="font-title text-2xl">{r.titre}</h3>
-                <button onClick={()=>setOpen(null)} className="font-body">✕</button>
+      {open &&
+        (() => {
+          const r = data.livre.recettes.find((x) => x.slug === open);
+          return (
+            <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4" onClick={() => setOpen(null)}>
+              <div className="max-w-2xl w-full rounded-2xl bg-white p-6 shadow" onClick={(e) => e.stopPropagation()}>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-title text-2xl">{r.titre}</h3>
+                  <button onClick={() => setOpen(null)} className="font-body">✕</button>
+                </div>
+                {r.photo && <img src={r.photo} alt="" className="mt-3 rounded-xl" />}
+                <p className="font-body mt-4 text-sm leading-relaxed whitespace-pre-wrap">{r.texteComplet}</p>
               </div>
-              {r.photo && <img src={r.photo} alt="" className="mt-3 rounded-xl" />}
-              <p className="font-body mt-4 text-sm leading-relaxed whitespace-pre-wrap">{r.texteComplet}</p>
             </div>
-          </div>
-        );
-      })()}
+          );
+        })()}
     </SectionShell>
   );
 }
 function AvisClients() {
   const [avis, setAvis] = useState([
     { name: "Jade M.", text: "Buffet magnifique, tout le monde s'est régalé !", note: 5, reply: "" },
-    { name: "Thomas B.", text: "Organisation impeccable et saveurs au top.", note: 5, reply: "" }
+    { name: "Thomas B.", text: "Organisation impeccable et saveurs au top.", note: 5, reply: "" },
   ]);
   const [form, setForm] = useState({ name: "", text: "", note: 5 });
   const add = () => {
@@ -335,16 +418,28 @@ function AvisClients() {
         </div>
         <div className="rounded-2xl bg-white p-6 ring-1 h-fit" style={{ ringColor: BRAND.olive + "55" }}>
           <div className="font-title text-xl" style={{ color: BRAND.gold }}>Ajouter un avis</div>
-          <label className="font-body text-sm mt-3 block">Nom
-            <input value={form.name} onChange={(e)=>setForm({...form,name:e.target.value})} className="mt-1 w-full rounded-xl border p-2" />
+          <label className="font-body text-sm mt-3 block">
+            Nom
+            <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1 w-full rounded-xl border p-2" />
           </label>
-          <label className="font-body text-sm mt-3 block">Votre avis
-            <textarea value={form.text} onChange={(e)=>setForm({...form,text:e.target.value})} rows={4} className="mt-1 w-full rounded-xl border p-2" />
+          <label className="font-body text-sm mt-3 block">
+            Votre avis
+            <textarea value={form.text} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={4} className="mt-1 w-full rounded-xl border p-2" />
           </label>
-          <label className="font-body text-sm mt-3 block">Note
-            <input type="number" min={1} max={5} value={form.note} onChange={(e)=>setForm({...form,note:parseInt(e.target.value||'5')})} className="mt-1 w-full rounded-xl border p-2" />
+          <label className="font-body text-sm mt-3 block">
+            Note
+            <input
+              type="number"
+              min={1}
+              max={5}
+              value={form.note}
+              onChange={(e) => setForm({ ...form, note: parseInt(e.target.value || "5") })}
+              className="mt-1 w-full rounded-xl border p-2"
+            />
           </label>
-          <button onClick={add} className="mt-4 w-full rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Publier</button>
+          <button onClick={add} className="mt-4 w-full rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>
+            Publier
+          </button>
         </div>
       </div>
     </SectionShell>
@@ -356,12 +451,20 @@ function Contact() {
       <div className="grid gap-8 sm:grid-cols-2">
         <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
           <div className="font-body text-sm">Téléphone</div>
-          <a href={`tel:${WHATSAPP_NUMBER}`} className="font-title text-2xl">{WHATSAPP_NUMBER}</a>
+          <a href={`tel:${WHATSAPP_NUMBER}`} className="font-title text-2xl">
+            {WHATSAPP_NUMBER}
+          </a>
           <div className="mt-4 font-body text-sm">Email</div>
-          <a href={`mailto:${PRO_EMAIL}`} className="font-title text-xl">{PRO_EMAIL}</a>
+          <a href={`mailto:${PRO_EMAIL}`} className="font-title text-xl">
+            {PRO_EMAIL}
+          </a>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href={waLink()} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Écrire sur WhatsApp</a>
-            <a href={`mailto:${PRO_EMAIL}`} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Écrire un email</a>
+            <a href={waLink()} className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>
+              Écrire sur WhatsApp
+            </a>
+            <a href={`mailto:${PRO_EMAIL}`} className="rounded-xl px-4 py-2 font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>
+              Écrire un email
+            </a>
           </div>
           <div className="mt-6 font-body text-sm text-black/70">Réseaux sociaux</div>
           <div className="mt-2 flex gap-4">
@@ -376,30 +479,63 @@ function Contact() {
             <input name="nom" placeholder="Votre nom" className="rounded-xl border p-2" />
             <input name="email" placeholder="Votre email" className="rounded-xl border p-2" />
             <textarea name="message" placeholder="Votre message" rows={5} className="rounded-xl border p-2" />
-            <button type="submit" className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.terra, color: 'white' }}>Envoyer</button>
+            <button type="submit" className="rounded-xl px-4 py-2 font-semibold" style={{ background: BRAND.terra, color: "white" }}>
+              Envoyer
+            </button>
           </form>
         </div>
       </div>
     </SectionShell>
   );
 }
-function Home() { return (<><Hero /></>); }
+function FAQ() {
+  const items = data.faq?.items || [
+    { q: "Livrez-vous ?", a: "Oui, selon la zone et le volume. Un supplément peut s'appliquer." },
+    { q: "Options végétariennes ?", a: "Oui, sur demande à la commande." },
+  ];
+  const [open, setOpen] = useState(-1);
+  return (
+    <SectionShell eyebrow="Questions fréquentes" title="FAQ" intro={data.faq?.intro || ""}>
+      <div className="divide-y rounded-2xl bg-white shadow ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+        {items.map((it, i) => (
+          <div key={i} className="p-4">
+            <button className="flex w-full items-center justify-between" onClick={() => setOpen(open === i ? -1 : i)}>
+              <div className="font-title text-lg">{it.q}</div>
+              <span className="text-black/50">{open === i ? "–" : "+"}</span>
+            </button>
+            {open === i && <p className="font-body mt-2 text-sm text-black/70">{it.a}</p>}
+          </div>
+        ))}
+      </div>
+    </SectionShell>
+  );
+}
+function Home() {
+  return <Hero />;
+}
 
-import { useParams } from "react-router-dom";
-
+/* ====== Détails (router params) ====== */
 function TraiteurDetail() {
   const { slug } = useParams();
-  const formule = data.traiteur.formules.find(f => f.slug === slug);
-  if (!formule) return <SectionShell title="Formule introuvable"> <p className="font-body">Cette formule n’existe pas.</p> </SectionShell>;
+  const formule = data.traiteur.formules.find((f) => f.slug === slug);
+  if (!formule)
+    return (
+      <SectionShell title="Formule introuvable">
+        <p className="font-body">Cette formule n’existe pas.</p>
+      </SectionShell>
+    );
 
   return (
     <SectionShell eyebrow="Traiteur" title={formule.titre} intro={formule.desc}>
       {formule.photos?.length ? <PhotoMasonry urls={formule.photos} /> : null}
-      <div className="mt-8 rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+      <div className="mt-8 rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
         <div className="font-title text-xl" style={{ color: BRAND.gold }}>Tarifs par pièce / personne</div>
         <ul className="mt-3 space-y-2 font-body text-sm">
-          {formule.pieces?.map((p,i)=>(
-            <li key={i} className="flex justify-between"><span>{p.nom}</span><span className="text-black/60">{p.tarif}</span></li>
+          {formule.pieces?.map((p, i) => (
+            <li key={i} className="flex justify-between">
+              <span>{p.nom}</span>
+              <span className="text-black/60">{p.tarif}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -409,20 +545,29 @@ function TraiteurDetail() {
 }
 function BoxDetail() {
   const { slug } = useParams();
-  const b = data.boxes.find(x => x.slug === slug);
-  if (!b) return <SectionShell title="Box introuvable"><p className="font-body">Cette box n'existe pas.</p></SectionShell>;
+  const b = data.boxes.find((x) => x.slug === slug);
+  if (!b)
+    return (
+      <SectionShell title="Box introuvable">
+        <p className="font-body">Cette box n'existe pas.</p>
+      </SectionShell>
+    );
   return (
     <SectionShell eyebrow="Box gourmande" title={b.titre} intro={`${b.theme} — ${b.prix}`}>
       {b.photos?.length ? <PhotoMasonry urls={b.photos} /> : null}
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
           <div className="font-title text-xl" style={{ color: BRAND.gold }}>Contenu</div>
-          <ul className="font-body mt-2 space-y-1 text-sm">{b.contenu.map((i,idx)=><li key={idx}>• {i}</li>)}</ul>
+          <ul className="font-body mt-2 space-y-1 text-sm">{b.contenu.map((i, idx) => <li key={idx}>• {i}</li>)}</ul>
         </div>
-        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+        <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
           <div className="font-title text-xl" style={{ color: BRAND.gold }}>Tailles & conservation</div>
-          <p className="font-body text-sm mt-2"><b>Tailles :</b> {b.tailles.join(', ')}</p>
-          <p className="font-body text-sm mt-2"><b>Conservation :</b> {b.conservation}</p>
+          <p className="font-body text-sm mt-2">
+            <b>Tailles :</b> {b.tailles.join(", ")}
+          </p>
+          <p className="font-body text-sm mt-2">
+            <b>Conservation :</b> {b.conservation}
+          </p>
         </div>
       </div>
       <CTADevis />
@@ -431,8 +576,13 @@ function BoxDetail() {
 }
 function AtelierDetail() {
   const { slug } = useParams();
-  const a = data.ateliers.find(x=>x.slug===slug);
-  if(!a) return <SectionShell title="Atelier introuvable"><p className="font-body">Cet atelier n'existe pas.</p></SectionShell>;
+  const a = data.ateliers.find((x) => x.slug === slug);
+  if (!a)
+    return (
+      <SectionShell title="Atelier introuvable">
+        <p className="font-body">Cet atelier n'existe pas.</p>
+      </SectionShell>
+    );
   return (
     <SectionShell eyebrow="Ateliers" title={a.titre} intro={a.desc}>
       {a.photos?.length ? <PhotoMasonry urls={a.photos} /> : null}
@@ -440,6 +590,7 @@ function AtelierDetail() {
     </SectionShell>
   );
 }
+
 /* ====== App avec ROUTES ====== */
 export default function App() {
   return (
@@ -447,9 +598,7 @@ export default function App() {
       <GlobalHead />
       <StickyNav />
       <Routes>
-        <Route path="/" element={<>
-          <Hero />
-        </>} />
+        <Route path="/" element={<Home />} />
         <Route path="/traiteur" element={<Traiteur />} />
         <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
         <Route path="/box" element={<BoxGourmande />} />
@@ -460,11 +609,11 @@ export default function App() {
         <Route path="/avis" element={<AvisClients />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="*" element={<Hero />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <footer className="border-t border-white/10 bg-black py-8 text-center text-white/60 font-body">
         © {new Date().getFullYear()} Cassiora — Traiteur. Tous droits réservés.
       </footer>
     </div>
-  )
+  );
 }
