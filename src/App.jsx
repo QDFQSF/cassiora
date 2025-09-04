@@ -49,11 +49,14 @@ function Container({ children, className = "" }) {
 /* ====== Header / Menu (liens vers vraies pages) ====== */
 function BrandBadge() {
   return (
-    <img 
-      src="/images/logo-cassiora.png" 
-      alt="Cassiora Traiteur" 
-      className="h-12 w-auto object-contain"
-    />
+    <div className="leading-tight">
+      <div className="font-title text-xl tracking-wide" style={{ color: BRAND.gold }}>
+        CASSIORA
+      </div>
+      <div className="font-body text-[10px] uppercase tracking-widest" style={{ color: BRAND.ivory }}>
+        Traiteur
+      </div>
+    </div>
   );
 }
 
@@ -118,23 +121,26 @@ function Hero() {
       <div className="absolute inset-0 -z-10" style={{ background: `linear-gradient(180deg, ${BRAND.offBlack}, #000)` }} />
       <Container className="grid gap-10 py-16 lg:grid-cols-2 lg:items-center">
         <div>
-          {data.branding.logoUrl && (
-            <img src={data.branding.logoUrl} alt="Cassiora" className="h-16 mb-4 object-contain" />
-          )}
-          <h1 className="font-title text-4xl sm:text-5xl text-white">{data.branding.homeTitle}</h1>
+          <h1 className="font-title text-4xl sm:text-5xl text-white">
+            {data.branding.homeTitle}
+          </h1>
           <p className="mt-4 font-body text-white/80">{data.branding.homeIntro}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/traiteur" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Découvrir le traiteur</Link>
-            <Link to="/box" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Box gourmande</Link>
+            <Link to="/traiteur" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>
+              Découvrir le traiteur
+            </Link>
+            <Link to="/box" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>
+              Box gourmande
+            </Link>
           </div>
         </div>
-        <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/10">
-          <img
-             alt="Cassiora Traiteur"
-             className="h-full w-full object-contain bg-black"
-             src="/images/logo-cassiora1.png"
-          />
 
+        <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-black">
+          <img
+            alt="Cassiora Traiteur"
+            className="h-full w-full object-contain"
+            src="/images/logo-cassiora1.png"
+          />
         </div>
       </Container>
     </section>
