@@ -4,75 +4,141 @@
     "homeTitle": "Traiteur artisanal, cuisine généreuse",
     "homeIntro": "Cassiora crée des expériences gourmandes sur-mesure : événements, box prêtes à savourer et ateliers conviviaux."
   },
+
   "traiteur": {
+    "intro": "Photos d'inspiration, grilles tarifaires et menus. Tout est personnalisable selon votre événement.",
     "formules": [
       {
-        "slug": "cocktail-dinatoire",
+        "slug": "Cocktail-dinatoire",
         "titre": "Cocktail dînatoire",
-        "desc": "Bouchées salées & sucrées, service au plateau",
-        "prix": "à partir de 22€/pers",
+        "desc": "Bouchées salées & sucrées",
+        "prix": "à partir de 13€/pers",
+        "photos": ["/images/traiteur1.jpg", "/images/traiteur2.jpg"],
         "pieces": [
-          { "nom": "Mini focaccia mortadelle & pistache", "tarif": "2,40€ / pièce / pers" },
-          { "nom": "Tartare de saumon, citron confit", "tarif": "3,20€ / pièce / pers" },
-          { "nom": "Arancini parmesan", "tarif": "1,90€ / pièce / pers" }
-        ],
-        "photos": ["/images/traiteur1.jpg", "/images/traiteur2.jpg"]
+          { "nom": "Formule 6 salées + 3 sucrées", "tarif": "13€/pers" },
+          { "nom": "Formule 9 salées + 4 sucrées", "tarif": "17€/pers" },
+          { "nom": "Formule 12 salées + 5 sucrées", "tarif": "22€/pers" }
+        ]
       },
       {
         "slug": "buffet-froid",
         "titre": "Buffet froid",
-        "desc": "Salades, charcuteries, fromages, desserts",
-        "prix": "à partir de 18€/pers",
+        "desc": "Salades, charcuteries, mignardises, fromages, desserts",
+        "prix": "à partir de 12€/pers",
+        "photos": ["/images/traiteur3.jpg"],
         "pieces": [
-          { "nom": "Planche mixte", "tarif": "6,00€ / pers" },
-          { "nom": "Salade de saison", "tarif": "4,50€ / pers" }
-        ],
-        "photos": ["/images/traiteur3.jpg"]
+          { "nom": "Planche mixte (charcuteries & fromages)", "tarif": "sur devis" },
+          { "nom": "Salades de saison", "tarif": "sur devis" }
+        ]
+      },
+      {
+        "slug": "menu-sur-mesure",
+        "titre": "Menu sur-mesure",
+        "desc": "Événements privés & pros",
+        "prix": "Sur devis",
+        "photos": ["/images/traiteur4.jpg"],
+        "pieces": []
+      },
+      {
+        "slug": "patisseries",
+        "titre": "Pâtisseries",
+        "desc": "Entremets, choux, tartes…",
+        "prix": "à partir de 4€/pers",
+        "photos": ["/images/traiteur5.jpg"],
+        "pieces": []
+      },
+      {
+        "slug": "biscuits-individuels",
+        "titre": "Biscuits / gâteaux individuels",
+        "desc": "Pièces individuelles",
+        "prix": "à partir de 1€/pièce",
+        "photos": ["/images/traiteur6.jpg"],
+        "pieces": []
       }
     ]
   },
+
   "boxes": [
     {
-      "slug": "brunch-2",
-      "titre": "Brunch pour 2",
-      "theme": "Brunch",
-      "tailles": ["2 pers", "4 pers"],
-      "prix": "29€",
-      "conservation": "À garder au frais ; à consommer sous 24h.",
-      "contenu": ["Viennoiseries", "Granola maison", "Fruits", "Boisson"],
-      "photos": ["/images/box1.jpg"]
+      "slug": "gouter-maison",
+      "titre": "Goûter fait maison",
+      "theme": "Sucré",
+      "tailles": ["2–3 pers", "4–6 pers", "8–10 pers"],
+      "prix": "sur devis selon taille",
+      "conservation": "À conserver au frais. Meilleur le jour-même.",
+      "contenu": ["Cookies", "Spritz", "Langues de chat", "Muffins"],
+      "photos": ["/images/box-gouter.jpg"]
     },
     {
-      "slug": "apero-auteur",
-      "titre": "Apéro d'auteur",
+      "slug": "petit-dejeuner-fms",
+      "titre": "Petit déjeuner prêt à enfourner (FMS)",
+      "theme": "Petit-déj",
+      "tailles": ["2–3 pers", "4–6 pers"],
+      "prix": "sur devis selon taille",
+      "conservation": "Cuisson à 160°C (5–7 min) pour servir tiède.",
+      "contenu": ["Chocolatines", "Croissants", "Brioches sucre", "Brioches chocolat", "Pancakes frais"],
+      "photos": ["/images/box-pdej.jpg"]
+    },
+    {
+      "slug": "plateau-charcuterie",
+      "titre": "Plateau charcuterie",
       "theme": "Apéro",
-      "tailles": ["2-3 pers", "4-6 pers"],
-      "prix": "39€",
-      "conservation": "Certaines pièces à réchauffer 5-7 min à 160°C.",
-      "contenu": ["Sélection salée", "Douceurs"],
-      "photos": ["/images/box2.jpg"]
-    }
-  ],
-  "ateliers": [
-    {
-      "slug": "patisserie",
-      "titre": "Pâtisserie",
-      "desc": "Macarons, choux, entremets",
-      "photos": ["/images/atelier1.jpg", "/images/atelier2.jpg"]
+      "tailles": ["2–3 pers", "4–6 pers", "8–10 pers"],
+      "prix": "sur devis selon taille",
+      "conservation": "À garder au frais, sortir 20 min avant dégustation.",
+      "contenu": ["Jambon cru", "Jambon blanc", "Rosette", "Terrine", "Rillettes", "Saucisson", "Coppa"],
+      "photos": ["/images/box-charcut.jpg"]
     },
     {
-      "slug": "cuisine-du-monde",
-      "titre": "Cuisine du monde",
-      "desc": "Italie, Liban, Asie",
-      "photos": ["/images/atelier3.jpg"]
+      "slug": "plateau-fromage",
+      "titre": "Plateau de fromage",
+      "theme": "Fromages",
+      "tailles": ["2–3 pers", "4–6 pers", "8–10 pers"],
+      "prix": "sur devis selon taille",
+      "conservation": "À conserver au frais, sortir 30 min avant.",
+      "contenu": ["Brie", "Tomme de brebis", "Bleu d’Auvergne", "Camembert", "Cantal", "Comté", "Tomme des Pyrénées", "Mimolette", "Chèvre"],
+      "photos": ["/images/box-fromage.jpg"]
+    },
+    {
+      "slug": "plateau-gourmands",
+      "titre": "Plateau des gourmands",
+      "theme": "Mix",
+      "tailles": ["2–3 pers", "4–6 pers", "8–10 pers"],
+      "prix": "sur devis",
+      "conservation": "À garder au frais.",
+      "contenu": ["Sélection mixte charcuteries & fromages des plateaux précédents"],
+      "photos": ["/images/box-gourmands.jpg"]
+    },
+    {
+      "slug": "plateau-saisonnier",
+      "titre": "Plateau saisonnier",
+      "theme": "Saison",
+      "tailles": ["2–3 pers", "4–6 pers", "8–10 pers"],
+      "prix": "sur devis",
+      "conservation": "Selon la composition. Indications fournies à la commande.",
+      "contenu": ["Hiver : raclette", "Printemps : légumes de saison", "Été : fruits", "Automne : préparations de saison"],
+      "photos": ["/images/box-saison.jpg"]
     }
   ],
+
+  "noteBoxes": "Au-delà de 10 personnes : sur devis.",
+
+  "ateliers": [
+    { "slug": "decouverte", "titre": "Découverte enfants / adultes", "desc": "Goûter pratique", "photos": ["/images/atelier1.jpg"] },
+    { "slug": "boulangerie", "titre": "Boulangerie", "desc": "Réaliser son pain (pratique)", "photos": ["/images/atelier2.jpg"] },
+    { "slug": "sucre", "titre": "Sucré", "desc": "Dégustations", "photos": ["/images/atelier3.jpg"] },
+    { "slug": "sale", "titre": "Salé", "desc": "Dégustations", "photos": ["/images/atelier4.jpg"] },
+    { "slug": "pizzaiolo", "titre": "Pizzaiolo/a", "desc": "Atelier pratique", "photos": ["/images/atelier5.jpg"] },
+    { "slug": "entremets", "titre": "Entremets", "desc": "Atelier pratique", "photos": ["/images/atelier6.jpg"] }
+  ],
+
   "livre": {
+    "intro": "Découvrez quelques extraits du livre en attendant sa sortie. Version e-book et imprimée bientôt disponibles.",
     "recettes": [
-      { "slug": "tarte-abricot-romarin", "titre": "Tarte abricot-romarin", "extrait": "Pâte croustillante, abricots au miel, pointe de romarin.", "photo": "/images/livre1.jpg", "texteComplet": "…texte complet ici…" },
-      { "slug": "focaccia-tomate", "titre": "Focaccia tomates confites", "extrait": "Hydratation généreuse, huile d'olive, sel de Camargue.", "photo": "/images/livre2.jpg", "texteComplet": "…texte complet ici…" },
-      { "slug": "creme-citron-basilic", "titre": "Crème citron basilic", "extrait": "Acidulé doux pour tartes & verrines.", "photo": "/images/livre3.jpg", "texteComplet": "…texte complet ici…" },
-      { "slug": "poulet-zaatar", "titre": "Poulet zaatar yaourt", "extrait": "Marinade express pour grillades parfumées.", "photo": "/images/livre4.jpg", "texteComplet": "…texte complet ici…" }
+      { "slug": "tarte-abricot-romarin", "titre": "Tarte abricot-romarin", "extrait": "Pâte croustillante, abricots au miel, pointe de romarin.", "photo": "/images/livre1.jpg", "texteComplet": "Texte complet de la recette ici." },
+      { "slug": "focaccia-tomates-confites", "titre": "Focaccia tomates confites", "extrait": "Hydratation généreuse, huile d'olive, sel de Camargue.", "photo": "/images/livre2.jpg", "texteComplet": "Texte complet de la recette ici." },
+      { "slug": "creme-citron-basilic", "titre": "Crème citron basilic", "extrait": "Un équilibre acidulé tout en douceur.", "photo": "/images/livre3.jpg", "texteComplet": "Texte complet de la recette ici." },
+      { "slug": "poulet-zaatar-yaourt", "titre": "Poulet zaatar yaourt", "extrait": "Marinade express pour grillades parfumées.", "photo": "/images/livre4.jpg", "texteComplet": "Texte complet de la recette ici." }
     ]
   }
 }
