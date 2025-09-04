@@ -1,0 +1,78 @@
+{
+  "branding": {
+    "logoUrl": "/images/logo-cassiora.png",
+    "homeTitle": "Traiteur artisanal, cuisine généreuse",
+    "homeIntro": "Cassiora crée des expériences gourmandes sur-mesure : événements, box prêtes à savourer et ateliers conviviaux."
+  },
+  "traiteur": {
+    "formules": [
+      {
+        "slug": "cocktail-dinatoire",
+        "titre": "Cocktail dînatoire",
+        "desc": "Bouchées salées & sucrées, service au plateau",
+        "prix": "à partir de 22€/pers",
+        "pieces": [
+          { "nom": "Mini focaccia mortadelle & pistache", "tarif": "2,40€ / pièce / pers" },
+          { "nom": "Tartare de saumon, citron confit", "tarif": "3,20€ / pièce / pers" },
+          { "nom": "Arancini parmesan", "tarif": "1,90€ / pièce / pers" }
+        ],
+        "photos": ["/images/traiteur1.jpg", "/images/traiteur2.jpg"]
+      },
+      {
+        "slug": "buffet-froid",
+        "titre": "Buffet froid",
+        "desc": "Salades, charcuteries, fromages, desserts",
+        "prix": "à partir de 18€/pers",
+        "pieces": [
+          { "nom": "Planche mixte", "tarif": "6,00€ / pers" },
+          { "nom": "Salade de saison", "tarif": "4,50€ / pers" }
+        ],
+        "photos": ["/images/traiteur3.jpg"]
+      }
+    ]
+  },
+  "boxes": [
+    {
+      "slug": "brunch-2",
+      "titre": "Brunch pour 2",
+      "theme": "Brunch",
+      "tailles": ["2 pers", "4 pers"],
+      "prix": "29€",
+      "conservation": "À garder au frais ; à consommer sous 24h.",
+      "contenu": ["Viennoiseries", "Granola maison", "Fruits", "Boisson"],
+      "photos": ["/images/box1.jpg"]
+    },
+    {
+      "slug": "apero-auteur",
+      "titre": "Apéro d'auteur",
+      "theme": "Apéro",
+      "tailles": ["2-3 pers", "4-6 pers"],
+      "prix": "39€",
+      "conservation": "Certaines pièces à réchauffer 5-7 min à 160°C.",
+      "contenu": ["Sélection salée", "Douceurs"],
+      "photos": ["/images/box2.jpg"]
+    }
+  ],
+  "ateliers": [
+    {
+      "slug": "patisserie",
+      "titre": "Pâtisserie",
+      "desc": "Macarons, choux, entremets",
+      "photos": ["/images/atelier1.jpg", "/images/atelier2.jpg"]
+    },
+    {
+      "slug": "cuisine-du-monde",
+      "titre": "Cuisine du monde",
+      "desc": "Italie, Liban, Asie",
+      "photos": ["/images/atelier3.jpg"]
+    }
+  ],
+  "livre": {
+    "recettes": [
+      { "slug": "tarte-abricot-romarin", "titre": "Tarte abricot-romarin", "extrait": "Pâte croustillante, abricots au miel, pointe de romarin.", "photo": "/images/livre1.jpg", "texteComplet": "…texte complet ici…" },
+      { "slug": "focaccia-tomate", "titre": "Focaccia tomates confites", "extrait": "Hydratation généreuse, huile d'olive, sel de Camargue.", "photo": "/images/livre2.jpg", "texteComplet": "…texte complet ici…" },
+      { "slug": "creme-citron-basilic", "titre": "Crème citron basilic", "extrait": "Acidulé doux pour tartes & verrines.", "photo": "/images/livre3.jpg", "texteComplet": "…texte complet ici…" },
+      { "slug": "poulet-zaatar", "titre": "Poulet zaatar yaourt", "extrait": "Marinade express pour grillades parfumées.", "photo": "/images/livre4.jpg", "texteComplet": "…texte complet ici…" }
+    ]
+  }
+}
