@@ -49,17 +49,14 @@ function Container({ children, className = "" }) {
 /* ====== Header / Menu (liens vers vraies pages) ====== */
 function BrandBadge() {
   return (
-    <div className="flex items-center gap-3">
-      <div className="relative h-9 w-9 rounded-full border-2" style={{ borderColor: BRAND.gold }}>
-        <div className="absolute inset-0 rounded-full" style={{ boxShadow: `0 0 0 2px ${BRAND.gold} inset` }} />
-      </div>
-      <div className="leading-tight">
-        <div className="font-title text-xl tracking-wide" style={{ color: BRAND.gold }}>CASSIORA</div>
-        <div className="font-body text-[10px] uppercase tracking-widest" style={{ color: BRAND.ivory }}>Traiteur</div>
-      </div>
-    </div>
+    <img 
+      src="/images/logo-cassiora.png" 
+      alt="Cassiora Traiteur" 
+      className="h-12 w-auto object-contain"
+    />
   );
 }
+
 function StickyNav() {
   const items = [
     { to: "/", label: "Accueil" },
@@ -132,7 +129,7 @@ function Hero() {
           </div>
         </div>
         <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/10">
-          <img alt="Cassiora — création traiteur" className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1600&auto=format&fit=crop" />
+          <img alt="Cassiora Logo" className="h-full w-full object-contain bg-black" src="/images/logo-cassiora1.png" />
         </div>
       </Container>
     </section>
