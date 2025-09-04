@@ -470,7 +470,6 @@ function Contact() {
           <div className="mt-2 flex gap-4">
             <a href="#" className="underline">Instagram</a>
             <a href="#" className="underline">Facebook</a>
-            <a href="#" className="underline">TikTok</a>
           </div>
         </div>
         <div className="rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive + "55" }}>
