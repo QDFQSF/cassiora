@@ -1,6 +1,7 @@
 import data from "./content/site.json";
 import React, { useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link } from 'react-router-dom'
 
 /* ====== Design (couleurs / typos) ====== */
 const BRAND = {
@@ -445,31 +446,26 @@ export default function App() {
   return (
     <div className="min-h-[100vh]" style={{ background: "#000" }}>
       <GlobalHead />
-      <BrowserRouter>
-        <StickyNav />
-        <Routes>
-          <Route path="/ateliers/:slug" element={<AtelierDetail />} />
-          <Route path="/box/:slug" element={<BoxDetail />} />
-          <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/traiteur" element={<Traiteur />} />
-          <Route path="/box" element={<BoxGourmande />} />
-          <Route path="/ateliers" element={<Ateliers />} />
-          <Route path="/livre" element={<Livre />} />
-          <Route path="/avis" element={<AvisClients />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faq" element={
-            <SectionShell eyebrow="Questions fréquentes" title="FAQ">
-              {/* Tu peux remettre ici ta FAQ plus tard */}
-              <p className="font-body">Rubrique en construction.</p>
-            </SectionShell>
-          } />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <footer className="border-t border-white/10 bg-black py-8 text-center text-white/60 font-body">
-          © {new Date().getFullYear()} Cassiora — Traiteur. Tous droits réservés.
-        </footer>
-      </BrowserRouter>
+      <StickyNav />
+      <Routes>
+        <Route path="/" element={<>
+          <Hero />
+        </>} />
+        <Route path="/traiteur" element={<Traiteur />} />
+        <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
+        <Route path="/box" element={<BoxGourmande />} />
+        <Route path="/box/:slug" element={<BoxDetail />} />
+        <Route path="/ateliers" element={<Ateliers />} />
+        <Route path="/ateliers/:slug" element={<AtelierDetail />} />
+        <Route path="/livre" element={<Livre />} />
+        <Route path="/avis" element={<AvisClients />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="*" element={<Hero />} />
+      </Routes>
+      <footer className="border-t border-white/10 bg-black py-8 text-center text-white/60 font-body">
+        © {new Date().getFullYear()} Cassiora — Traiteur. Tous droits réservés.
+      </footer>
     </div>
-  );
+  )
 }
