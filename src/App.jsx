@@ -1,6 +1,7 @@
 import data from "./content/site.json";
 import React, { useMemo, useState } from "react";
 import { Routes, Route, Link, useParams } from "react-router-dom";
+
 /* ====== Design (couleurs / typos) ====== */
 const BRAND = {
   gold: "#D4AF37",
