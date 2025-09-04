@@ -1,3 +1,4 @@
+import data from "./content/site.json";
 import React, { useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 
@@ -109,8 +110,12 @@ function Hero() {
       <div className="absolute inset-0 -z-10" style={{ background: `linear-gradient(180deg, ${BRAND.offBlack}, #000)` }} />
       <Container className="grid gap-10 py-16 lg:grid-cols-2 lg:items-center">
         <div>
-          <h1 className="font-title text-4xl sm:text-5xl text-white">Traiteur artisanal, cuisine généreuse</h1>
-          <p className="mt-4 font-body text-white/80">Cassiora crée des expériences gourmandes sur-mesure : événements, box prêtes à savourer et ateliers conviviaux.</p>
+          {/* logo */}
+          {data.branding.logoUrl && (
+            <img src={data.branding.logoUrl} alt="Cassiora" className="h-16 mb-4 object-contain" />
+          )}
+          <h1 className="font-title text-4xl sm:text-5xl text-white">{data.branding.homeTitle}</h1>
+          <p className="mt-4 font-body text-white/80">{data.branding.homeIntro}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link to="/traiteur" className="rounded-xl px-5 py-3 font-body font-semibold" style={{ background: BRAND.gold, color: BRAND.black }}>Découvrir le traiteur</Link>
             <Link to="/box" className="rounded-xl px-5 py-3 font-body font-semibold border" style={{ borderColor: BRAND.gold, color: BRAND.gold }}>Box gourmande</Link>
@@ -123,6 +128,7 @@ function Hero() {
     </section>
   );
 }
+
 function SectionShell({ eyebrow, title, intro, children, tone = "light" }) {
   const bg = tone === "light" ? BRAND.ivory : "#0a0a0a";
   const fg = tone === "light" ? BRAND.offBlack : "#f5f5f5";
@@ -182,28 +188,26 @@ function CTADevis({ label = "Demande de devis" }) {
     </div>
   );
 }
-
 /* ====== Pages ====== */
 function Traiteur() {
-  const photos = [
-    "https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1521389508051-d7ffb5dc8bbf?q=80&w=1200&auto=format&fit=crop",
-  ];
-  const pricing = [
-    { title: "Cocktail dînatoire", desc: "Bouchées salées & sucrées, service au plateau", price: "à partir de 22€/pers" },
-    { title: "Buffet froid", desc: "Salades, charcuteries, fromages, desserts", price: "à partir de 18€/pers" },
-    { title: "Menu sur-mesure", desc: "Événements privés & pros", price: "sur devis" },
-  ];
-  const menu = [
-    { name: "Pièces salées", items: [{ name: "Mini focaccia mortadelle & pistache" },{ name: "Tartare de saumon, citron confit" },{ name: "Arancini parmesan" }] },
-    { name: "Douceurs", items: [{ name: "Tiramisu noisette" },{ name: "Financiers agrumes" },{ name: "Cheesecake fruits rouges" }] },
-  ];
+  const photos = (data.traiteur.formules.flatMap(f => f.photos)).slice(0,3);
+  const pricing = data.traiteur.formules.map(f => ({
+    title: f.titre, desc: f.desc, price: f.prix, slug: f.slug
+  }));
   return (
     <SectionShell eyebrow="Prestations" title="Traiteur" intro="Photos d'inspiration, grilles tarifaires indicatives et exemple de menus. Tout est personnalisable selon votre événement.">
       <PhotoMasonry urls={photos} />
-      <div className="mt-10"><PricingTable items={pricing} /></div>
-      <div className="mt-10"><SimpleMenu groups={menu} /></div>
+      <div className="mt-10">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {pricing.map(p => (
+            <Link key={p.title} to={`/traiteur/${p.slug}`} className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow" style={{ borderColor: BRAND.olive + '55' }}>
+              <div className="font-title text-xl">{p.title}</div>
+              <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
+              <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>{p.price}</div>
+            </Link>
+          ))}
+        </div>
+      </div>
       <CTADevis />
     </SectionShell>
   );
@@ -384,6 +388,29 @@ function Contact() {
 }
 function Home() { return (<><Hero /></>); }
 
+import { useParams } from "react-router-dom";
+
+function TraiteurDetail() {
+  const { slug } = useParams();
+  const formule = data.traiteur.formules.find(f => f.slug === slug);
+  if (!formule) return <SectionShell title="Formule introuvable"> <p className="font-body">Cette formule n’existe pas.</p> </SectionShell>;
+
+  return (
+    <SectionShell eyebrow="Traiteur" title={formule.titre} intro={formule.desc}>
+      {formule.photos?.length ? <PhotoMasonry urls={formule.photos} /> : null}
+      <div className="mt-8 rounded-2xl bg-white p-6 ring-1" style={{ ringColor: BRAND.olive+'55' }}>
+        <div className="font-title text-xl" style={{ color: BRAND.gold }}>Tarifs par pièce / personne</div>
+        <ul className="mt-3 space-y-2 font-body text-sm">
+          {formule.pieces?.map((p,i)=>(
+            <li key={i} className="flex justify-between"><span>{p.nom}</span><span className="text-black/60">{p.tarif}</span></li>
+          ))}
+        </ul>
+      </div>
+      <CTADevis />
+    </SectionShell>
+  );
+}
+
 /* ====== App avec ROUTES ====== */
 export default function App() {
   return (
@@ -392,6 +419,7 @@ export default function App() {
       <BrowserRouter>
         <StickyNav />
         <Routes>
+          <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
           <Route path="/" element={<Home />} />
           <Route path="/traiteur" element={<Traiteur />} />
           <Route path="/box" element={<BoxGourmande />} />
