@@ -129,7 +129,12 @@ function Hero() {
           </div>
         </div>
         <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-white/10">
-          <img alt="Cassiora Logo" className="h-full w-full object-contain bg-black" src="/images/logo-cassiora1.png" />
+          <img
+             alt="Cassiora Traiteur"
+             className="h-full w-full object-contain bg-black"
+             src="/images/logo-cassiora1.png"
+          />
+
         </div>
       </Container>
     </section>
