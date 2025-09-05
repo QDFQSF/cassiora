@@ -233,26 +233,31 @@ function Traiteur() {
       <PhotoMasonry urls={photos} />
       <div className="mt-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {pricing.map((p) => (
-            <Link
-              key={p.slug}
-              to={`/traiteur/${p.slug}`}
-              className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
-              style={{ borderColor: BRAND.olive + "55" }}
-            >
-              <div className="font-title text-xl">{p.title}</div>
-              <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
-              <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>
-                {p.price}
-              </div>
-            </Link>
-          ))}
-        </div>
+          {pricing.map((p) => {
+  const f = data.traiteur.formules.find(x => x.slug === p.slug);
+  const hasPdf = !!f?.pdf;
+  const to = hasPdf ? `/menu/${p.slug}` : `/traiteur/${p.slug}`;
+
+  return (
+    <Link
+      key={p.slug}
+      to={to}
+      className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
+      style={{ borderColor: BRAND.olive + "55" }}
+    >
+      <div className="font-title text-xl">{p.title}</div>
+      <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
+      <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>
+        {p.price}
       </div>
-      <CTADevis />
-    </SectionShell>
+      {hasPdf && (
+        <div className="mt-3 font-body text-xs text-black/60">
+          Cliquer ouvre le menu PDF
+        </div>
+      )}
+    </Link>
   );
-}
+})}
 
 function BoxGourmande() {
   const list = data.boxes;
@@ -606,6 +611,51 @@ function AtelierDetail() {
   );
 }
 
+function MenuPDF() {
+  const { slug } = useParams();
+  const f = data.traiteur.formules.find(x => x.slug === slug);
+
+  if (!f) {
+    return (
+      <SectionShell title="Menu introuvable">
+        <p className="font-body">Cette formule n’existe pas.</p>
+      </SectionShell>
+    );
+  }
+  if (!f.pdf) {
+    return (
+      <SectionShell title={f.titre} intro="Le PDF n'est pas disponible pour cette formule.">
+        <CTADevis label="Demander le menu en PDF" />
+      </SectionShell>
+    );
+  }
+
+  return (
+    <SectionShell eyebrow="Traiteur" title={f.titre} intro="Menu complet (PDF)">
+      <div className="mb-4 flex gap-3">
+        <a href={f.pdf} target="_blank" rel="noreferrer"
+           className="rounded-xl px-4 py-2 font-body font-semibold"
+           style={{ background: BRAND.gold, color: BRAND.black }}>
+          Ouvrir dans un nouvel onglet
+        </a>
+        <a href={f.pdf} download
+           className="rounded-xl px-4 py-2 font-body font-semibold border"
+           style={{ borderColor: BRAND.gold, color: BRAND.gold }}>
+          Télécharger le PDF
+        </a>
+      </div>
+      <div className="rounded-2xl overflow-hidden bg-white ring-1" style={{ ringColor: BRAND.olive + "55" }}>
+        <iframe
+          title={`Menu ${f.titre}`}
+          src={f.pdf}
+          className="w-full"
+          style={{ height: "85vh" }}
+        />
+      </div>
+    </SectionShell>
+  );
+}
+
 /* ====== App avec ROUTES ====== */
 export default function App() {
   return (
@@ -613,6 +663,7 @@ export default function App() {
       <GlobalHead />
       <StickyNav />
       <Routes>
+        <Route path="/menu/:slug" element={<MenuPDF />} />
         <Route path="/" element={<Home />} />
         <Route path="/traiteur" element={<Traiteur />} />
         <Route path="/traiteur/:slug" element={<TraiteurDetail />} />
