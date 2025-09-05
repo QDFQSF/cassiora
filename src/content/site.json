@@ -128,12 +128,12 @@
   "noteBoxes": "Au-delà de 10 personnes : sur devis.",
 
   "ateliers": [
-  { "slug": "sucre", "titre": "Sucré", "desc": "Dégustations", "photos": ["/images/atelier3.jpg"] },
-  { "slug": "sale", "titre": "Salé", "desc": "Dégustations", "photos": ["/images/atelier4.jpg"] },
-  { "slug": "decouverte", "titre": "Découverte enfants / adultes", "desc": "Goûter pratique", "photos": ["/images/atelier1.jpg"] },
-  { "slug": "boulangerie", "titre": "Boulangerie", "desc": "Réaliser son pain (pratique)", "photos": ["/images/atelier2.jpg"] },
-  { "slug": "pizzaiolo", "titre": "Pizzaiolo/a", "desc": "Atelier pratique", "photos": ["/images/atelier5.jpg"] },
-  { "slug": "entremets", "titre": "Entremets", "desc": "Atelier pratique", "photos": ["/images/atelier6.jpg"] }
+  { "slug": "sucre", "titre": "Sucré", "desc": "Atelier Dégustation", "photos": ["/images/atelier3.jpg"] },
+  { "slug": "sale", "titre": "Salé", "desc": "Atelier Dégustation", "photos": ["/images/atelier4.jpg"] },
+  { "slug": "decouverte", "titre": "Découverte enfants / adultes", "desc": "Atelier Pratique", "photos": ["/images/atelier1.jpg"] },
+  { "slug": "boulangerie", "titre": "Boulangerie", "desc": "Atelier Pratique", "photos": ["/images/atelier2.jpg"] },
+  { "slug": "pizzaiolo", "titre": "Pizzaiolo/a", "desc": "Atelier Pratique", "photos": ["/images/atelier5.jpg"] },
+  { "slug": "entremets", "titre": "Entremets", "desc": "Atelier Pratique", "photos": ["/images/atelier6.jpg"] }
 ],
 
   "livre": {
