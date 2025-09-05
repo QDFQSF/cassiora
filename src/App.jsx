@@ -221,31 +221,28 @@ function Traiteur() {
     title: f.titre,
     desc: f.desc,
     price: f.prix,
-    slug: f.slug
+    slug: f.slug,
   }));
 
   return (
     <SectionShell
       eyebrow="Prestations"
       title="Traiteur"
-      intro={data.traiteur.intro} // <-- maintenant le texte vient du site.json
+      intro={data.traiteur.intro} // <-- texte vient de site.json
     >
       <PhotoMasonry urls={photos} />
       <div className="mt-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pricing.map((p) => (
             <Link
-              key={p.title}
+              key={p.slug}
               to={`/traiteur/${p.slug}`}
               className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
               style={{ borderColor: BRAND.olive + "55" }}
             >
               <div className="font-title text-xl">{p.title}</div>
               <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
-              <div
-                className="font-title mt-4 text-3xl"
-                style={{ color: BRAND.terra }}
-              >
+              <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>
                 {p.price}
               </div>
             </Link>
