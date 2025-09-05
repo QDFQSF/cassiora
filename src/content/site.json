@@ -14,6 +14,7 @@
         "desc": "Bouchées salées & sucrées",
         "prix": "à partir de 13€/pers",
         "photos": ["/images/traiteur1.jpg", "/images/traiteur2.jpg"],
+        "pdf": "/menus/cocktail-dinatoire.pdf",
         "pieces": [
           { "nom": "Formule 6 salées + 3 sucrées", "tarif": "13€/pers" },
           { "nom": "Formule 9 salées + 4 sucrées", "tarif": "17€/pers" },
@@ -26,6 +27,7 @@
         "desc": "Salades, charcuteries, mignardises, fromages, desserts",
         "prix": "à partir de 12€/pers",
         "photos": ["/images/traiteur3.jpg"],
+        "pdf": "/menus/buffet-froid.pdf",
         "pieces": [
           { "nom": "Planche mixte (charcuteries & fromages)", "tarif": "sur devis" },
           { "nom": "Salades de saison", "tarif": "sur devis" }
@@ -45,6 +47,7 @@
         "desc": "Entremets, choux, tartes…",
         "prix": "à partir de 4€/part",
         "photos": ["/images/traiteur5.jpg"],
+        "pdf": "/menus/patisseries.pdf",
         "pieces": []
       },
       {
@@ -53,6 +56,7 @@
         "desc": "Pièces individuelles",
         "prix": "à partir de 1€/pièce",
         "photos": ["/images/traiteur6.jpg"],
+        "pdf": "/menus/biscuits-individuels.pdf",
         "pieces": []
       }
     ]
