@@ -216,15 +216,20 @@ function CTADevis({ label = "Demande de devis" }) {
 
 /* ====== Pages ====== */
 function Traiteur() {
-  const photos = (data.traiteur.formules.flatMap((f) => f.photos)).slice(0, 3);
-  const pricing = data.traiteur.formules.map((f) => ({
+  const photos = (data.traiteur.formules.flatMap(f => f.photos)).slice(0, 3);
+  const pricing = data.traiteur.formules.map(f => ({
     title: f.titre,
     desc: f.desc,
     price: f.prix,
-    slug: f.slug,
+    slug: f.slug
   }));
+
   return (
-    <SectionShell eyebrow="Prestations" title="Traiteur" intro="Photos d'inspiration, grilles tarifaires indicatives et exemple de menus. Tout est personnalisable selon votre événement.">
+    <SectionShell
+      eyebrow="Prestations"
+      title="Traiteur"
+      intro={data.traiteur.intro} // <-- maintenant le texte vient du site.json
+    >
       <PhotoMasonry urls={photos} />
       <div className="mt-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -237,7 +242,12 @@ function Traiteur() {
             >
               <div className="font-title text-xl">{p.title}</div>
               <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
-              <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>{p.price}</div>
+              <div
+                className="font-title mt-4 text-3xl"
+                style={{ color: BRAND.terra }}
+              >
+                {p.price}
+              </div>
             </Link>
           ))}
         </div>
@@ -246,6 +256,7 @@ function Traiteur() {
     </SectionShell>
   );
 }
+
 function BoxGourmande() {
   const list = data.boxes;
   return (
