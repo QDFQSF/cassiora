@@ -622,7 +622,6 @@ function AtelierDetail() {
 
 function MenuPDF() {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const f = data.traiteur.formules.find(x => x.slug === slug);
 
   if (!f) {
@@ -642,7 +641,17 @@ function MenuPDF() {
 
   return (
     <SectionShell eyebrow="Traiteur" title={f.titre} intro="Menu complet (PDF)">
-      <div className="mb-4 flex gap-3">
+      {/* Boutons actions */}
+      <div className="mb-4 flex flex-wrap gap-3 items-center">
+        {/* BOUTON RETOUR */}
+        <Link
+          to="/traiteur"
+          className="rounded-full px-4 py-2 font-body font-semibold"
+          style={{ background: BRAND.terra, color: "white" }}
+        >
+          ✕ Fermer / Retour
+        </Link>
+
         <a href={f.pdf} target="_blank" rel="noreferrer"
            className="rounded-xl px-4 py-2 font-body font-semibold"
            style={{ background: BRAND.gold, color: BRAND.black }}>
@@ -654,6 +663,8 @@ function MenuPDF() {
           Télécharger le PDF
         </a>
       </div>
+
+      {/* Affichage PDF */}
       <div className="rounded-2xl overflow-hidden bg-white ring-1" style={{ ringColor: BRAND.olive + "55" }}>
         <iframe
           title={`Menu ${f.titre}`}
@@ -665,6 +676,7 @@ function MenuPDF() {
     </SectionShell>
   );
 }
+
 
 /* ====== App avec ROUTES ====== */
 export default function App() {
