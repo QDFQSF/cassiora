@@ -228,36 +228,44 @@ function Traiteur() {
     <SectionShell
       eyebrow="Prestations"
       title="Traiteur"
-      intro={data.traiteur.intro} // <-- texte vient de site.json
+      intro={data.traiteur.intro}
     >
       <PhotoMasonry urls={photos} />
+
       <div className="mt-10">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pricing.map((p) => {
-  const f = data.traiteur.formules.find(x => x.slug === p.slug);
-  const hasPdf = !!f?.pdf;
-  const to = hasPdf ? `/menu/${p.slug}` : `/traiteur/${p.slug}`;
+            const f = data.traiteur.formules.find(x => x.slug === p.slug);
+            const hasPdf = !!f?.pdf;
+            const to = hasPdf ? `/menu/${p.slug}` : `/traiteur/${p.slug}`;
 
-  return (
-    <Link
-      key={p.slug}
-      to={to}
-      className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
-      style={{ borderColor: BRAND.olive + "55" }}
-    >
-      <div className="font-title text-xl">{p.title}</div>
-      <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
-      <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>
-        {p.price}
-      </div>
-      {hasPdf && (
-        <div className="mt-3 font-body text-xs text-black/60">
-          Cliquer ouvre le menu PDF
+            return (
+              <Link
+                key={p.slug}
+                to={to}
+                className="rounded-2xl border p-6 shadow-sm bg-white hover:shadow"
+                style={{ borderColor: BRAND.olive + "55" }}
+              >
+                <div className="font-title text-xl">{p.title}</div>
+                <p className="font-body mt-1 text-sm text-black/70">{p.desc}</p>
+                <div className="font-title mt-4 text-3xl" style={{ color: BRAND.terra }}>
+                  {p.price}
+                </div>
+                {hasPdf && (
+                  <div className="mt-3 font-body text-xs text-black/60">
+                    Cliquer ouvre le menu PDF
+                  </div>
+                )}
+              </Link>
+            );
+          })}
         </div>
-      )}
-    </Link>
+      </div>
+
+      <CTADevis />
+    </SectionShell>
   );
-})}
+}
 
 function BoxGourmande() {
   const list = data.boxes;
@@ -288,6 +296,7 @@ function BoxGourmande() {
     </SectionShell>
   );
 }
+
 function MiniCalendar({ onChange }) {
   const today = useMemo(() => new Date(), []);
   const [month, setMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
