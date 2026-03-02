@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.CheckoutSession
+    const session = event.data.object as Stripe.Checkout.Session
     const meta = session.metadata || {}
 
     const montant = session.amount_total ? `${(session.amount_total / 100).toFixed(2)}€` : 'N/A'
