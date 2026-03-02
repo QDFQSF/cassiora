@@ -57,13 +57,4 @@ export const offresSchema = defineType({
       initialValue: 'Réserver maintenant',
     }),
   ],
-  preview: {
-    select: { title: 'titre', subtitle: 'active' },
-    prepare({ title, subtitle }: { title: string; subtitle: unknown }) {
-      return {
-        title: title as string,
-        subtitle: subtitle ? '✅ Active' : '⏸️ Désactivée',
-      }
-    },
-  },
 })
