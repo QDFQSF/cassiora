@@ -59,9 +59,9 @@ export const offresSchema = defineType({
   ],
   preview: {
     select: { title: 'titre', subtitle: 'active' },
-    prepare({ title, subtitle }: { title: string; subtitle: boolean }) {
+    prepare({ title, subtitle }: { title: string; subtitle: unknown }) {
       return {
-        title,
+        title: title as string,
         subtitle: subtitle ? '✅ Active' : '⏸️ Désactivée',
       }
     },
