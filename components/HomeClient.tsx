@@ -140,17 +140,18 @@ export default function HomeClient({ data }: Props) {
               <Link href="/box-gourmande" className="btn-gold">Voir les box</Link>
             </div>
             <div className="animate-on-scroll relative" style={{ animationDelay: "0.2s" }}>
-              <div className="aspect-square max-w-sm mx-auto relative" style={{ background: "linear-gradient(135deg, #0d0a00, #1a1000)", border: "1px solid rgba(201, 168, 76, 0.25)" }}>
-                <div className="absolute top-4 left-4 w-6 h-6" style={{ borderTop: "1px solid #c9a84c", borderLeft: "1px solid #c9a84c" }} />
-                <div className="absolute top-4 right-4 w-6 h-6" style={{ borderTop: "1px solid #c9a84c", borderRight: "1px solid #c9a84c" }} />
-                <div className="absolute bottom-4 left-4 w-6 h-6" style={{ borderBottom: "1px solid #c9a84c", borderLeft: "1px solid #c9a84c" }} />
-                <div className="absolute bottom-4 right-4 w-6 h-6" style={{ borderBottom: "1px solid #c9a84c", borderRight: "1px solid #c9a84c" }} />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center">
-                  <div className="text-gold/30 text-6xl mb-4">◈</div>
-                  <p className="text-cream/30 text-sm" style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic" }}>
-                    Ajoutez une photo de vos box depuis l'admin Sanity
-                  </p>
-                </div>
+              <div className="aspect-square max-w-sm mx-auto relative overflow-hidden" style={{ border: "1px solid rgba(201, 168, 76, 0.25)" }}>
+                <img
+                  src="/images/alliance-gourmande.jpg"
+                  alt="Box Gourmande Cassiora"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 30%',
+                    borderRadius: '4px'
+                  }}
+                />
               </div>
             </div>
           </div>
