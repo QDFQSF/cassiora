@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 const boxes = [
   { id: "pause-sucree", nom: "La Pause Sucrée", description: "Collections permanentes, retrouvez tous les mois dans votre box un gâteau/biscuit en plus.", contenu: ["Cookies 1/pers", "Muffins pépite de chocolat 1/pers", "Brownie 1/pers", "Donuts au sucre 1/pers", "+ Gâteau du mois 1/pers"], tarifs: { "2/3": 25, "4/6": 42, "8/10": 70 }, highlight: false },
@@ -152,9 +151,7 @@ export default function BoxGourmandePage() {
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-black text-[0.55rem] tracking-[0.2em] uppercase whitespace-nowrap z-10" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>Le plus populaire</div>
                   )}
                   {(box as any).image && (
-                    <div className="relative h-48 w-full overflow-hidden rounded-t">
-                      <Image src={(box as any).image} alt={box.nom} fill style={{ objectFit: "cover" }} />
-                    </div>
+                    <img src={(box as any).image} alt={box.nom} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px 8px 0 0" }} />
                   )}
                   <div className="p-7 flex flex-col flex-1">
                     <div className="mb-4">
@@ -201,9 +198,7 @@ export default function BoxGourmandePage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="card-luxury overflow-hidden">
-              <div className="relative h-48 w-full overflow-hidden rounded-t">
-                <Image src={abonnement.image} alt={abonnement.nom} fill style={{ objectFit: "cover" }} />
-              </div>
+              <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px 8px 0 0" }} />
               <div className="p-7">
                 <p className="text-gold/60 text-[0.55rem] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Contenu hebdomadaire</p>
                 <ul className="space-y-2.5">

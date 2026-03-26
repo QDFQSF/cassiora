@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const buffetFroid = {
   id: "buffet", titre: "Buffet Froid", image: "/images/buffet.jpg",
@@ -158,9 +157,7 @@ export default function TraiteurPage() {
               {/* Gauche */}
               <div className="lg:col-span-3">
                 {(prestation as any).image && (
-                  <div className="relative h-64 w-full overflow-hidden rounded mb-6">
-                    <Image src={(prestation as any).image} alt={prestation.titre} fill style={{ objectFit: "cover" }} />
-                  </div>
+                  <img src={(prestation as any).image} alt={prestation.titre} style={{ width: "100%", height: "256px", objectFit: "cover", borderRadius: "8px", marginBottom: "24px" }} />
                 )}
                 <p className="text-gold/60 text-[0.6rem] tracking-[0.5em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif" }}>{prestation.titre}</p>
                 <p className="text-cream/60 text-lg mb-6 leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: "italic" }}>{prestation.accroche}</p>
