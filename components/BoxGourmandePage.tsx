@@ -151,7 +151,7 @@ export default function BoxGourmandePage() {
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-black text-[0.55rem] tracking-[0.2em] uppercase whitespace-nowrap z-10" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>Le plus populaire</div>
                   )}
                   {(box as any).image && (
-                    <img src={(box as any).image} alt={box.nom} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px 8px 0 0" }} />
+                    <img src={(box as any).image} alt={box.nom} style={{ width: "100%", height: "220px", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "4px 4px 0 0" }} />
                   )}
                   <div className="p-7 flex flex-col flex-1">
                     <div className="mb-4">
@@ -198,7 +198,7 @@ export default function BoxGourmandePage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="card-luxury overflow-hidden">
-              <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "8px 8px 0 0" }} />
+              <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "220px", objectFit: "cover", objectPosition: "center top", display: "block", borderRadius: "4px 4px 0 0" }} />
               <div className="p-7">
                 <p className="text-gold/60 text-[0.55rem] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Contenu hebdomadaire</p>
                 <ul className="space-y-2.5">
