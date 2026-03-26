@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import LivraisonField from "./LivraisonField";
 
 // Même données que BoxGourmandePage
 const boxes = [
@@ -139,17 +140,19 @@ async function submitCheckout(body: object, setStatus: (s: "idle" | "loading" | 
 function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "", commentaire: "" });
   const [regimes, setRegimes] = useState<string[]>([]);
+  const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const t = e.target;
+    if (t.name === "livraison" && !(t as HTMLInputElement).checked) setDistanceKm(null);
     setForm((f) => ({ ...f, [t.name]: t.type === "checkbox" ? (t as HTMLInputElement).checked : t.value }));
   };
   const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "brunch_alliance", ...form, regimes }, setStatus);
+    submitCheckout({ offre: "brunch_alliance", ...form, regimes, distanceKm }, setStatus);
   };
 
   return (
@@ -174,9 +177,13 @@ function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
           </label>
           {form.livraison && (
             <div className="mt-4">
-              <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Adresse de livraison</label>
-              <input type="text" name="adresse" value={form.adresse} onChange={handle} placeholder="Adresse complète" className={ic} style={{ fontFamily: "'Jost', sans-serif" }} />
-              <p className="text-gold/40 text-xs mt-2 italic" style={{ fontFamily: "'Jost', sans-serif" }}>Frais confirmés par email selon votre zone.</p>
+              <LivraisonField
+                adresse={form.adresse}
+                onChange={handle}
+                prix={106}
+                onDistanceChange={setDistanceKm}
+                note="Frais confirmés par email selon votre zone."
+              />
             </div>
           )}
         </div>
@@ -325,6 +332,7 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
 function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", adresse: "", dateDebut: "", commentaire: "" });
   const [regimes, setRegimes] = useState<string[]>([]);
+  const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -332,7 +340,7 @@ function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "boite_gouter", ...form, regimes }, setStatus);
+    submitCheckout({ offre: "boite_gouter", ...form, regimes, distanceKm }, setStatus);
   };
 
   return (
@@ -347,11 +355,14 @@ function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
           <div><label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Téléphone</label><input type="tel" name="telephone" value={form.telephone} onChange={handle} placeholder="06 xx xx xx xx" className={ic} style={{ fontFamily: "'Jost', sans-serif" }} /></div>
           <div><label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Date de début</label><input type="date" name="dateDebut" required min={getMinDate()} value={form.dateDebut} onChange={handle} className={ic} style={{ fontFamily: "'Jost', sans-serif", colorScheme: "dark" }} /></div>
         </div>
-        <div>
-          <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Adresse de livraison</label>
-          <input type="text" name="adresse" required value={form.adresse} onChange={handle} placeholder="Adresse complète" className={ic} style={{ fontFamily: "'Jost', sans-serif" }} />
-          <p className="text-gold/40 text-xs mt-2 italic" style={{ fontFamily: "'Jost', sans-serif" }}>Livraison toutes les deux semaines pour garantir la fraîcheur.</p>
-        </div>
+        <LivraisonField
+          adresse={form.adresse}
+          onChange={handle}
+          prix={36}
+          onDistanceChange={setDistanceKm}
+          required
+          note="Livraison toutes les deux semaines pour garantir la fraîcheur."
+        />
         <div>
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
           <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />

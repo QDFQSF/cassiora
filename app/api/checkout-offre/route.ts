@@ -9,8 +9,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { offre, regimes } = body
+    const { offre, regimes, distanceKm } = body
     const regimesStr: string = Array.isArray(regimes) && regimes.length > 0 ? regimes.join(', ') : ''
+    const distanceStr: string = distanceKm != null ? `${distanceKm} km` : ''
 
     let session: Stripe.Checkout.Session
 
@@ -48,6 +49,7 @@ export async function POST(request: Request) {
           adresse: adresse || '',
           commentaire: commentaire || '',
           regimes: regimesStr,
+          distance: distanceStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -81,6 +83,7 @@ export async function POST(request: Request) {
           boxChoisie: boxNom,
           commentaire: commentaire || '',
           regimes: regimesStr,
+          distance: distanceStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -115,6 +118,7 @@ export async function POST(request: Request) {
           box2: `${box2Nom} · ${box2Taille} pers (-15%)`,
           commentaire: commentaire || '',
           regimes: regimesStr,
+          distance: distanceStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -154,6 +158,7 @@ export async function POST(request: Request) {
           livraison: 'oui',
           commentaire: commentaire || '',
           regimes: regimesStr,
+          distance: distanceStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,

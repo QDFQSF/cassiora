@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import LivraisonField from "./LivraisonField";
 
 const REGIMES = ["Arachides", "Fruits à coque", "Lait/Lactose", "Gluten", "Œufs", "Fruits de mer", "Soja", "Végétarien", "Végan", "Sans porc", "Halal"];
 
@@ -38,12 +39,14 @@ function getMinDate() {
 function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: string; taille?: Taille; formule?: FormuleAbo; prix: number; onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "", message: "" });
   const [regimes, setRegimes] = useState<string[]>([]);
+  const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const t = e.target;
+    if (t.name === "livraison" && !(t as HTMLInputElement).checked) setDistanceKm(null);
     setForm((f) => ({ ...f, [t.name]: t.type === "checkbox" ? (t as HTMLInputElement).checked : t.value }));
   };
 
@@ -54,7 +57,7 @@ function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: str
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ boxNom, taille, formule: formule ? `${formule.label} — ${formule.detail}` : undefined, prix, ...form, regimes }),
+        body: JSON.stringify({ boxNom, taille, formule: formule ? `${formule.label} — ${formule.detail}` : undefined, prix, ...form, regimes, distanceKm }),
       });
       const data = await res.json();
       if (data.url) { window.location.href = data.url; }
@@ -100,9 +103,13 @@ function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: str
               </label>
               {form.livraison && (
                 <div className="mt-4">
-                  <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Adresse de livraison</label>
-                  <input type="text" name="adresse" value={form.adresse} onChange={handleChange} placeholder="Adresse complète" className={ic} style={{ fontFamily: "'Jost', sans-serif" }} />
-                  <p className="text-gold/40 text-xs mt-2 italic" style={{ fontFamily: "'Jost', sans-serif" }}>Les frais de livraison seront calculés selon votre zone et confirmés par email.</p>
+                  <LivraisonField
+                    adresse={form.adresse}
+                    onChange={handleChange}
+                    prix={prix}
+                    onDistanceChange={setDistanceKm}
+                    note="Les frais de livraison seront calculés selon votre zone et confirmés par email."
+                  />
                 </div>
               )}
             </div>
