@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const buffetFroid = {
-  id: "buffet", titre: "Buffet Froid",
+  id: "buffet", titre: "Buffet Froid", image: "/images/buffet.jpg",
   accroche: "Un buffet élégant et généreux pour vos réceptions, repas d'entreprise ou fêtes de famille.",
   note: "Minimum 10 personnes · Corbeille de pains variés & beurre inclus · Le choix des plats est identique pour l'ensemble des convives.",
   categories: [
@@ -20,7 +21,7 @@ const buffetFroid = {
 };
 
 const cocktailDinatoire = {
-  id: "cocktail", titre: "Cocktail Dînatoire",
+  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg",
   accroche: "Des pièces raffinées pour un cocktail élégant. Mariages, séminaires, soirées d'entreprise.",
   note: "Minimum 10 personnes · Le choix des pièces se fait par lots pour garantir la qualité artisanale.",
   categories: [
@@ -156,6 +157,11 @@ export default function TraiteurPage() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
               {/* Gauche */}
               <div className="lg:col-span-3">
+                {(prestation as any).image && (
+                  <div className="relative h-64 w-full overflow-hidden rounded mb-6">
+                    <Image src={(prestation as any).image} alt={prestation.titre} fill style={{ objectFit: "cover" }} />
+                  </div>
+                )}
                 <p className="text-gold/60 text-[0.6rem] tracking-[0.5em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif" }}>{prestation.titre}</p>
                 <p className="text-cream/60 text-lg mb-6 leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: "italic" }}>{prestation.accroche}</p>
                 <div className="card-luxury p-6">
