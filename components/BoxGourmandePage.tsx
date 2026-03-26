@@ -14,7 +14,7 @@ const boxes = [
 const abonnement = {
   nom: "La Boîte à Goûter",
   image: "/images/box-gouter.jpg",
-  objectPosition: "center 20%",
+  objectPosition: "50% 60%",
   description: "Abonnement hebdomadaire. Retrait ou livraison toutes les deux semaines pour garantir la fraîcheur.",
   contenu: ["Cookies 2 pièces", "Le biscuit de la récré 4 pièces", "Barquette à la fraise 6 pièces", "Ourson moelleux aux pépites de chocolat 2 pièces", "+ Gâteau/biscuit du mois en plus"],
   formules: [

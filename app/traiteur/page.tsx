@@ -20,7 +20,7 @@ const buffetFroid = {
 };
 
 const cocktailDinatoire = {
-  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg", objectPosition: "center 50%",
+  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg", objectPosition: "50% 35%", imageHeight: "200px",
   accroche: "Des pièces raffinées pour un cocktail élégant. Mariages, séminaires, soirées d'entreprise.",
   note: "Minimum 10 personnes · Le choix des pièces se fait par lots pour garantir la qualité artisanale.",
   categories: [
@@ -157,7 +157,7 @@ export default function TraiteurPage() {
               {/* Gauche */}
               <div className="lg:col-span-3">
                 {(prestation as any).image && (
-                  <div style={{ width: "100%", height: "260px", overflow: "hidden", borderRadius: "4px 4px 0 0", marginBottom: "24px" }}>
+                  <div style={{ width: "100%", height: (prestation as any).imageHeight || "260px", overflow: "hidden", borderRadius: "4px 4px 0 0", marginBottom: "24px" }}>
                     <img src={(prestation as any).image} alt={prestation.titre} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: (prestation as any).objectPosition || "center", transform: "scale(1.05)" }} />
                   </div>
                 )}
