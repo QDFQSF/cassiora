@@ -1,13 +1,15 @@
 import { client, queries } from "@/lib/sanity";
+import { getOffresLancementActives } from "@/lib/offres-lancement";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export const revalidate = 30;
 
 export default async function OffresSpecialesPage() {
-  const offres = await client.fetch(queries.offresActives).catch(() => []);
+  const sanityOffres = await client.fetch(queries.offresActives).catch(() => []);
+  const offres = [...getOffresLancementActives(), ...(sanityOffres || [])];
 
-  if (!offres || offres.length === 0) return notFound();
+  if (offres.length === 0) return notFound();
 
   return (
     <div className="bg-black min-h-screen">

@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server'
 import { client, queries } from '@/lib/sanity'
+import { getOffresLancementActives } from '@/lib/offres-lancement'
 
 export async function GET() {
   try {
     const offres = await client.fetch(queries.offresActives)
-    return NextResponse.json({ hasOffres: offres && offres.length > 0 })
+    const lancement = getOffresLancementActives()
+    const hasOffres = (offres && offres.length > 0) || lancement.length > 0
+    return NextResponse.json({ hasOffres })
   } catch {
-    return NextResponse.json({ hasOffres: false })
+    const lancement = getOffresLancementActives()
+    return NextResponse.json({ hasOffres: lancement.length > 0 })
   }
 }
