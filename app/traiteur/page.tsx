@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const buffetFroid = {
-  id: "buffet", titre: "Buffet Froid", image: "/images/buffet.jpg",
+  id: "buffet", titre: "Buffet Froid", image: "/images/buffet.jpg", objectPosition: "center 40%",
   accroche: "Un buffet élégant et généreux pour vos réceptions, repas d'entreprise ou fêtes de famille.",
   note: "Minimum 10 personnes · Corbeille de pains variés & beurre inclus · Le choix des plats est identique pour l'ensemble des convives.",
   categories: [
@@ -20,7 +20,7 @@ const buffetFroid = {
 };
 
 const cocktailDinatoire = {
-  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg",
+  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg", objectPosition: "center 50%",
   accroche: "Des pièces raffinées pour un cocktail élégant. Mariages, séminaires, soirées d'entreprise.",
   note: "Minimum 10 personnes · Le choix des pièces se fait par lots pour garantir la qualité artisanale.",
   categories: [
@@ -157,7 +157,9 @@ export default function TraiteurPage() {
               {/* Gauche */}
               <div className="lg:col-span-3">
                 {(prestation as any).image && (
-                  <img src={(prestation as any).image} alt={prestation.titre} style={{ width: "100%", height: "256px", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "4px 4px 0 0", marginBottom: "24px" }} />
+                  <div style={{ width: "100%", height: "260px", overflow: "hidden", borderRadius: "4px 4px 0 0", marginBottom: "24px" }}>
+                    <img src={(prestation as any).image} alt={prestation.titre} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: (prestation as any).objectPosition || "center", transform: "scale(1.05)" }} />
+                  </div>
                 )}
                 <p className="text-gold/60 text-[0.6rem] tracking-[0.5em] uppercase mb-3" style={{ fontFamily: "'Cinzel', serif" }}>{prestation.titre}</p>
                 <p className="text-cream/60 text-lg mb-6 leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: "italic" }}>{prestation.accroche}</p>

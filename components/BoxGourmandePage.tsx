@@ -6,14 +6,15 @@ const boxes = [
   { id: "pause-sucree", nom: "La Pause Sucrée", description: "Collections permanentes, retrouvez tous les mois dans votre box un gâteau/biscuit en plus.", contenu: ["Cookies 1/pers", "Muffins pépite de chocolat 1/pers", "Brownie 1/pers", "Donuts au sucre 1/pers", "+ Gâteau du mois 1/pers"], tarifs: { "2/3": 25, "4/6": 42, "8/10": 70 }, highlight: false },
   { id: "petit-dejeuner", nom: "Petit Déjeuner", description: "Le cake change toutes les semaines (citron ou marbré). Chouquettes selon la taille choisie.", contenu: ["Brioche au sucre 1/pers", "Brioche pépite de chocolat 1/pers", "Chouquettes (quantités variables)", "Madeleine 1/pers", "Mini Cake 1/pers"], tarifs: { "2/3": 20, "4/6": 35, "8/10": 55 }, highlight: false },
   { id: "brunch", nom: "Le Brunch de Cassiora", description: "Le brunch complet sucré-salé. Topping inclus (pâte à tartiner, caramel ou confiture au choix).", contenu: ["Brioche sucre + chocolat 1/pers", "Brioche perdue 1/pers", "Pancakes 1/pers", "Mini cake sucré 1/pers", "Chouquettes", "Mini quiche 1/pers", "Mini cake salé 1/pers", "Petits feuilletés salés 1/pers", "Brochette de fruits frais 1/pers", "1 pot de topping au choix"], tarifs: { "2/3": 32, "4/6": 56, "8/10": 90 }, highlight: true },
-  { id: "fromage", nom: "Plateau de Fromage", description: "Sélection selon saison. Confiture/chutney + fruits et fruits secs compris. Pain non inclus.", contenu: ["Brie · Tomme de brebis · Bleu", "Cantal · Comté · Tomme du Ramier · Chèvre", "2/3 pers : 3 variétés", "4/6 pers : 5 variétés", "8/10 pers : 7 variétés"], tarifs: { "2/3": 26, "4/6": 45, "8/10": 75 }, highlight: false, image: "/images/plateau-fromage.jpg" },
-  { id: "charcuterie", nom: "Plateau de Charcuterie", description: "Beurre + cornichons + fruits et légumes frais compris. Pain non inclus.", contenu: ["Jambon cru · Jambon blanc · Rosette", "Coppa · Chorizo · Saucisse sèche", "Terrine de campagne · Mousse de foie"], tarifs: { "2/3": 28, "4/6": 48, "8/10": 85 }, highlight: false, image: "/images/plateau-charcuterie.jpg" },
-  { id: "alliance", nom: "L'Alliance Gourmande", description: "Sélection mixte fromages & charcuteries. Beurre + cornichons + fruits compris. Pain non inclus.", contenu: ["2/3 : 2 fromages + 2 charcuteries", "4/6 : 3 fromages + 4 charcuteries", "8/10 : 5 fromages + 6 charcuteries", "Beurre doux ou demi-sel au choix", "Cornichons + fruits & légumes frais"], tarifs: { "2/3": 32, "4/6": 56, "8/10": 90 }, highlight: false, image: "/images/alliance-gourmande.jpg" },
+  { id: "fromage", nom: "Plateau de Fromage", description: "Sélection selon saison. Confiture/chutney + fruits et fruits secs compris. Pain non inclus.", contenu: ["Brie · Tomme de brebis · Bleu", "Cantal · Comté · Tomme du Ramier · Chèvre", "2/3 pers : 3 variétés", "4/6 pers : 5 variétés", "8/10 pers : 7 variétés"], tarifs: { "2/3": 26, "4/6": 45, "8/10": 75 }, highlight: false, image: "/images/plateau-fromage.jpg", objectPosition: "center 40%" },
+  { id: "charcuterie", nom: "Plateau de Charcuterie", description: "Beurre + cornichons + fruits et légumes frais compris. Pain non inclus.", contenu: ["Jambon cru · Jambon blanc · Rosette", "Coppa · Chorizo · Saucisse sèche", "Terrine de campagne · Mousse de foie"], tarifs: { "2/3": 28, "4/6": 48, "8/10": 85 }, highlight: false, image: "/images/plateau-charcuterie.jpg", objectPosition: "center 30%" },
+  { id: "alliance", nom: "L'Alliance Gourmande", description: "Sélection mixte fromages & charcuteries. Beurre + cornichons + fruits compris. Pain non inclus.", contenu: ["2/3 : 2 fromages + 2 charcuteries", "4/6 : 3 fromages + 4 charcuteries", "8/10 : 5 fromages + 6 charcuteries", "Beurre doux ou demi-sel au choix", "Cornichons + fruits & légumes frais"], tarifs: { "2/3": 32, "4/6": 56, "8/10": 90 }, highlight: false, image: "/images/alliance-gourmande.jpg", objectPosition: "center 30%" },
 ];
 
 const abonnement = {
   nom: "La Boîte à Goûter",
   image: "/images/box-gouter.jpg",
+  objectPosition: "center 20%",
   description: "Abonnement hebdomadaire. Retrait ou livraison toutes les deux semaines pour garantir la fraîcheur.",
   contenu: ["Cookies 2 pièces", "Le biscuit de la récré 4 pièces", "Barquette à la fraise 6 pièces", "Ourson moelleux aux pépites de chocolat 2 pièces", "+ Gâteau/biscuit du mois en plus"],
   formules: [
@@ -151,7 +152,9 @@ export default function BoxGourmandePage() {
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-black text-[0.55rem] tracking-[0.2em] uppercase whitespace-nowrap z-10" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>Le plus populaire</div>
                   )}
                   {(box as any).image && (
-                    <img src={(box as any).image} alt={box.nom} style={{ width: "100%", height: "220px", objectFit: "cover", objectPosition: "center", display: "block", borderRadius: "4px 4px 0 0" }} />
+                    <div style={{ width: "100%", height: "260px", overflow: "hidden", borderRadius: "4px 4px 0 0" }}>
+                      <img src={(box as any).image} alt={box.nom} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: (box as any).objectPosition || "center", transform: "scale(1.05)" }} />
+                    </div>
                   )}
                   <div className="p-7 flex flex-col flex-1">
                     <div className="mb-4">
@@ -198,7 +201,9 @@ export default function BoxGourmandePage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="card-luxury overflow-hidden">
-              <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "220px", objectFit: "cover", objectPosition: "center top", display: "block", borderRadius: "4px 4px 0 0" }} />
+              <div style={{ width: "100%", height: "260px", overflow: "hidden", borderRadius: "4px 4px 0 0" }}>
+                <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: abonnement.objectPosition, transform: "scale(1.05)" }} />
+              </div>
               <div className="p-7">
                 <p className="text-gold/60 text-[0.55rem] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Contenu hebdomadaire</p>
                 <ul className="space-y-2.5">
