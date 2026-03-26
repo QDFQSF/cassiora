@@ -51,8 +51,8 @@ export const OFFRES_LANCEMENT = [
   },
 ]
 
-const DEBUT = new Date("2026-03-26")
-const FIN = new Date("2026-04-30T23:59:59")
+const DEBUT = new Date('2026-03-30T00:00:00')
+const FIN = new Date('2026-04-30T23:59:59')
 
 export function getOffresLancementActives() {
   const now = new Date()

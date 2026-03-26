@@ -201,7 +201,7 @@ export default function BoxGourmandePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="card-luxury overflow-hidden">
               <div style={{ width: "100%", height: "260px", overflow: "hidden", borderRadius: "4px 4px 0 0" }}>
-                <img src={abonnement.image} alt={abonnement.nom} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: abonnement.objectPosition, transform: "scale(1.05)" }} />
+                <img src="/images/box-gouter.jpg" alt={abonnement.nom} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: abonnement.objectPosition, transform: "scale(1.05)" }} />
               </div>
               <div className="p-7">
                 <p className="text-gold/60 text-[0.55rem] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Contenu hebdomadaire</p>
