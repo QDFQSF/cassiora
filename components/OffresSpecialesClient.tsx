@@ -348,11 +348,9 @@ export default function OffresSpecialesClient({ offres }: { offres: any[] }) {
               const modalType = OFFRE_MODAL_MAP[offre._id];
               return (
                 <div key={offre._id} className="card-luxury p-8 relative" style={{ border: "1px solid rgba(201, 168, 76, 0.35)" }}>
-                  {offre.badge && (
-                    <div className="absolute -top-3 left-6 px-4 py-1 text-black text-[0.55rem] tracking-[0.2em] uppercase" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>
-                      {offre.badge}
-                    </div>
-                  )}
+                  <div className="absolute -top-3 left-6 px-4 py-1 text-black text-[0.55rem] tracking-[0.2em] uppercase" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>
+                    {offre.bientot ? "Disponible le 30 mars" : offre.badge}
+                  </div>
                   {offre.validiteJusquau && (
                     <p className="text-gold/40 text-[0.6rem] tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>
                       Jusqu'au {new Date(offre.validiteJusquau).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
@@ -371,7 +369,11 @@ export default function OffresSpecialesClient({ offres }: { offres: any[] }) {
                       ))}
                     </ul>
                   )}
-                  {modalType ? (
+                  {offre.bientot ? (
+                    <button disabled className="btn-gold" style={{ opacity: 0.45, cursor: "not-allowed" }}>
+                      Disponible le 30 mars
+                    </button>
+                  ) : modalType ? (
                     <button onClick={() => setActiveModal(modalType)} className="btn-gold">
                       {offre.cta || "Commander maintenant"}
                     </button>

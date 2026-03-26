@@ -56,6 +56,9 @@ const FIN = new Date('2026-04-30T23:59:59')
 
 export function getOffresLancementActives() {
   const now = new Date()
-  if (now >= DEBUT && now <= FIN) return OFFRES_LANCEMENT
-  return []
+  return OFFRES_LANCEMENT.map(offre => ({
+    ...offre,
+    active: now >= DEBUT && now <= FIN,
+    bientot: now < DEBUT,
+  }))
 }
