@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+
+const REGIMES = ["Arachides", "Fruits à coque", "Lait/Lactose", "Gluten", "Œufs", "Fruits de mer", "Soja", "Végétarien", "Végan", "Sans porc", "Halal"];
 
 const boxes = [
   { id: "pause-sucree", nom: "La Pause Sucrée", description: "Collections permanentes, retrouvez tous les mois dans votre box un gâteau/biscuit en plus.", contenu: ["Cookies 1/pers", "Muffins pépite de chocolat 1/pers", "Brownie 1/pers", "Donuts au sucre 1/pers", "+ Gâteau du mois 1/pers"], tarifs: { "2/3": 25, "4/6": 42, "8/10": 70 }, highlight: false, image: "/images/box-gouter.jpg", objectPosition: "50% 60%" },
@@ -34,7 +37,10 @@ function getMinDate() {
 
 function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: string; taille?: Taille; formule?: FormuleAbo; prix: number; onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "", message: "" });
+  const [regimes, setRegimes] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+
+  const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const t = e.target;
@@ -48,7 +54,7 @@ function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: str
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ boxNom, taille, formule: formule ? `${formule.label} — ${formule.detail}` : undefined, prix, ...form }),
+        body: JSON.stringify({ boxNom, taille, formule: formule ? `${formule.label} — ${formule.detail}` : undefined, prix, ...form, regimes }),
       });
       const data = await res.json();
       if (data.url) { window.location.href = data.url; }
@@ -101,6 +107,22 @@ function ModalCommande({ boxNom, taille, formule, prix, onClose }: { boxNom: str
               )}
             </div>
             <div><label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Message (optionnel)</label><textarea name="message" rows={2} value={form.message} onChange={handleChange} placeholder="Allergies, précisions, demandes particulières…" className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} /></div>
+            <div>
+              <p className="block text-[0.6rem] tracking-[0.2em] uppercase text-gold/50 mb-3" style={{ fontFamily: "'Cinzel', serif" }}>Régimes & allergies (optionnel)</p>
+              <div className="flex flex-wrap gap-2">
+                {REGIMES.map((r) => (
+                  <button key={r} type="button" onClick={() => toggleRegime(r)} className="px-3 py-1.5 text-xs transition-all duration-200" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, border: regimes.includes(r) ? "1px solid #c9a84c" : "1px solid rgba(201,168,76,0.2)", background: regimes.includes(r) ? "rgba(201,168,76,0.12)" : "transparent", color: regimes.includes(r) ? "#e2ce75" : "rgba(248,246,240,0.4)" }}>
+                    {regimes.includes(r) ? "✓ " : ""}{r}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="px-4 py-3" style={{ background: "rgba(201,168,76,0.04)", border: "1px solid rgba(201,168,76,0.15)" }}>
+              <p className="text-cream/50 text-xs leading-relaxed" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
+                ⚠️ Allergies ou régimes spécifiques ? Utilisez le champ commentaire ci-dessus ou consultez notre{" "}
+                <Link href="/allergenes" className="text-gold hover:text-gold-light underline transition-colors">liste des allergènes</Link>.
+              </p>
+            </div>
             {status === "error" && <p className="text-red-400/70 text-xs" style={{ fontFamily: "'Jost', sans-serif" }}>Erreur lors de la connexion au paiement. Veuillez réessayer.</p>}
             <div className="pt-2">
               <div className="flex items-center gap-2 mb-4">

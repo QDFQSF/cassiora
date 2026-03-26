@@ -9,7 +9,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 export async function POST(request: Request) {
   try {
-    const { boxNom, taille, formule, prix, livraison, adresse, nom, email, telephone, date, message } = await request.json()
+    const { boxNom, taille, formule, prix, livraison, adresse, nom, email, telephone, date, message, regimes } = await request.json()
 
     // Description complète pour Stripe
     const description = [
@@ -64,6 +64,7 @@ export async function POST(request: Request) {
         livraison: livraison ? 'oui' : 'non',
         adresse: adresse || '',
         message: message || '',
+        regimes: Array.isArray(regimes) && regimes.length > 0 ? regimes.join(', ') : '',
       },
       mode: 'payment',
       success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,

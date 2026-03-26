@@ -9,7 +9,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { offre } = body
+    const { offre, regimes } = body
+    const regimesStr: string = Array.isArray(regimes) && regimes.length > 0 ? regimes.join(', ') : ''
 
     let session: Stripe.Checkout.Session
 
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
           livraison: livraison ? 'oui' : 'non',
           adresse: adresse || '',
           commentaire: commentaire || '',
+          regimes: regimesStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -78,6 +80,7 @@ export async function POST(request: Request) {
           taille,
           boxChoisie: boxNom,
           commentaire: commentaire || '',
+          regimes: regimesStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -111,6 +114,7 @@ export async function POST(request: Request) {
           box1: `${box1Nom} · ${box1Taille} pers`,
           box2: `${box2Nom} · ${box2Taille} pers (-15%)`,
           commentaire: commentaire || '',
+          regimes: regimesStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -149,6 +153,7 @@ export async function POST(request: Request) {
           date: dateDebut || '',
           livraison: 'oui',
           commentaire: commentaire || '',
+          regimes: regimesStr,
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,

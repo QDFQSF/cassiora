@@ -16,6 +16,8 @@ const boxes = [
 type Taille = "2/3" | "4/6" | "8/10";
 type ModalType = "brunch_alliance" | "pack_decouverte" | "duo_gourmand" | "boite_gouter";
 
+const REGIMES = ["Arachides", "Fruits à coque", "Lait/Lactose", "Gluten", "Œufs", "Fruits de mer", "Soja", "Végétarien", "Végan", "Sans porc", "Halal"];
+
 const OFFRE_MODAL_MAP: Record<string, ModalType> = {
   "lancement-1": "brunch_alliance",
   "lancement-2": "pack_decouverte",
@@ -85,6 +87,29 @@ function SummaryBox({ titre, detail }: { titre: string; detail: string }) {
   );
 }
 
+function RegimesSection({ regimes, toggleRegime }: { regimes: string[]; toggleRegime: (r: string) => void }) {
+  return (
+    <>
+      <div>
+        <p className="block text-[0.6rem] tracking-[0.2em] uppercase text-gold/50 mb-3" style={{ fontFamily: "'Cinzel', serif" }}>Régimes & allergies (optionnel)</p>
+        <div className="flex flex-wrap gap-2">
+          {REGIMES.map((r) => (
+            <button key={r} type="button" onClick={() => toggleRegime(r)} className="px-3 py-1.5 text-xs transition-all duration-200" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300, border: regimes.includes(r) ? "1px solid #c9a84c" : "1px solid rgba(201,168,76,0.2)", background: regimes.includes(r) ? "rgba(201,168,76,0.12)" : "transparent", color: regimes.includes(r) ? "#e2ce75" : "rgba(248,246,240,0.4)" }}>
+              {regimes.includes(r) ? "✓ " : ""}{r}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="px-4 py-3" style={{ background: "rgba(201,168,76,0.04)", border: "1px solid rgba(201,168,76,0.15)" }}>
+        <p className="text-cream/50 text-xs leading-relaxed" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
+          ⚠️ Allergies ou régimes spécifiques ? Utilisez le champ commentaire ci-dessus ou consultez notre{" "}
+          <Link href="/allergenes" className="text-gold hover:text-gold-light underline transition-colors">liste des allergènes</Link>.
+        </p>
+      </div>
+    </>
+  );
+}
+
 function SubmitRow({ prix, status }: { prix: string; status: "idle" | "loading" | "error" }) {
   return (
     <div className="pt-2">
@@ -113,16 +138,18 @@ async function submitCheckout(body: object, setStatus: (s: "idle" | "loading" | 
 // ─── Modale 1 : Brunch Alliance ────────────────────────────────────────────
 function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "", commentaire: "" });
+  const [regimes, setRegimes] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const t = e.target;
     setForm((f) => ({ ...f, [t.name]: t.type === "checkbox" ? (t as HTMLInputElement).checked : t.value }));
   };
+  const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "brunch_alliance", ...form }, setStatus);
+    submitCheckout({ offre: "brunch_alliance", ...form, regimes }, setStatus);
   };
 
   return (
@@ -157,6 +184,7 @@ function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
           <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
         </div>
+        <RegimesSection regimes={regimes} toggleRegime={toggleRegime} />
         <SubmitRow prix="106€" status={status} />
       </form>
     </ModalShell>
@@ -168,16 +196,18 @@ function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", commentaire: "" });
   const [boxId, setBoxId] = useState("brunch");
   const [taille, setTaille] = useState<Taille>("4/6");
+  const [regimes, setRegimes] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const box = boxes.find((b) => b.id === boxId)!;
   const prix = box.tarifs[taille];
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "pack_decouverte", ...form, boxNom: box.nom, taille, prix }, setStatus);
+    submitCheckout({ offre: "pack_decouverte", ...form, boxNom: box.nom, taille, prix, regimes }, setStatus);
   };
 
   return (
@@ -205,6 +235,7 @@ function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
           <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
         </div>
+        <RegimesSection regimes={regimes} toggleRegime={toggleRegime} />
         <SubmitRow prix={`${prix}€`} status={status} />
       </form>
     </ModalShell>
@@ -218,6 +249,7 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
   const [box1Taille, setBox1Taille] = useState<Taille>("4/6");
   const [box2Id, setBox2Id] = useState("pause-sucree");
   const [box2Taille, setBox2Taille] = useState<Taille>("4/6");
+  const [regimes, setRegimes] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const box1 = boxes.find((b) => b.id === box1Id)!;
@@ -227,10 +259,11 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
   const totalPrix = Math.round((box1Prix + box2Prix * 0.85) * 100) / 100;
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "duo_gourmand", ...form, box1Nom: box1.nom, box1Taille, box1Prix, box2Nom: box2.nom, box2Taille, box2Prix }, setStatus);
+    submitCheckout({ offre: "duo_gourmand", ...form, box1Nom: box1.nom, box1Taille, box1Prix, box2Nom: box2.nom, box2Taille, box2Prix, regimes }, setStatus);
   };
 
   return (
@@ -281,6 +314,7 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
           <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
         </div>
+        <RegimesSection regimes={regimes} toggleRegime={toggleRegime} />
         <SubmitRow prix={`${totalPrix}€`} status={status} />
       </form>
     </ModalShell>
@@ -290,13 +324,15 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
 // ─── Modale 4 : Boîte à Goûter ──────────────────────────────────────────────
 function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ nom: "", email: "", telephone: "", adresse: "", dateDebut: "", commentaire: "" });
+  const [regimes, setRegimes] = useState<string[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const toggleRegime = (r: string) => setRegimes((prev) => prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitCheckout({ offre: "boite_gouter", ...form }, setStatus);
+    submitCheckout({ offre: "boite_gouter", ...form, regimes }, setStatus);
   };
 
   return (
@@ -320,6 +356,7 @@ function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
           <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
         </div>
+        <RegimesSection regimes={regimes} toggleRegime={toggleRegime} />
         <SubmitRow prix="36€" status={status} />
       </form>
     </ModalShell>

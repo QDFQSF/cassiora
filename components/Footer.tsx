@@ -44,7 +44,7 @@ export default function Footer() {
           <div>
             <h4 className="text-gold text-xs tracking-[0.2em] uppercase mb-4" style={{ fontFamily: "'Cinzel', serif" }}>Informations</h4>
             <ul className="space-y-2.5">
-              {[{ href: "/avis-clients", label: "Avis clients" }, { href: "/faq", label: "FAQ" }, { href: "/contact", label: "Contact" }].map((l) => (
+              {[{ href: "/avis-clients", label: "Avis clients" }, { href: "/faq", label: "FAQ" }, { href: "/contact", label: "Contact" }, { href: "/allergenes", label: "Allergènes & informations" }].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-cream/50 hover:text-cream/90 text-sm transition-colors" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
                     {l.label}
