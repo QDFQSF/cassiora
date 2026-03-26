@@ -8,7 +8,7 @@ const buffetFroid = {
   accroche: "Un buffet élégant et généreux pour vos réceptions, repas d'entreprise ou fêtes de famille.",
   note: "Minimum 10 personnes · Corbeille de pains variés & beurre inclus · Le choix des plats est identique pour l'ensemble des convives.",
   categories: [
-    { nom: "Entrées & salades composées", items: ["Salade piémontaise traditionnelle — pommes de terre, jambon, cornichons & ciboulette", "Salade automnale — jeunes pousses, figues fraîches, noix & fromage bleu", "Taboulé de quinoa aux légumes croquants & herbes fraîches", "Assortiment de crudités — carottes, céleri, concombre & sauce yaourt citronnée"] },
+    { nom: "Entrées & salades composées", items: ["Salade piémontaise traditionnelle — pommes de terre, jambon, cornichons & ciboulette", "Salade Printanière Croquante — jeunes pousses, pointes d'asperges vertes, radis roses, fèves & vinaigrette légère aux agrumes", "Salade d'Orzo à la Méditerranéenne — perles de pâtes (orzo), courgettes grillées, tomates séchées, feta émiettée & pesto de basilic maison", "Assortiment de crudités — carottes, céleri, concombre & sauce yaourt citronnée"] },
     { nom: "Plats froids & viandes", items: ["Rôti de bœuf froid — moutarde à l'ancienne & cornichons", "Filet de poulet rôti froid — mayonnaise maison ou sauce curry douce", "Plateau de charcuteries fines — jambon cru, rosette, pâté de campagne", "Terrine de saumon aux herbes — sauce citronnée"] },
     { nom: "Desserts & douceurs", items: ["Verrine sablée au fruit de saison", "Crumble aux pommes", "Moelleux au chocolat", "Salade de fruits frais de saison — pomme, poire, clémentine"] },
   ],
