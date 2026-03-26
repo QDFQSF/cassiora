@@ -20,7 +20,7 @@ const buffetFroid = {
 };
 
 const cocktailDinatoire = {
-  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg", objectPosition: "50% 35%", imageHeight: "200px",
+  id: "cocktail", titre: "Cocktail Dînatoire", image: "/images/traiteur-cocktail.jpg", objectPosition: "50% 25%", imageHeight: "220px",
   accroche: "Des pièces raffinées pour un cocktail élégant. Mariages, séminaires, soirées d'entreprise.",
   note: "Minimum 10 personnes · Le choix des pièces se fait par lots pour garantir la qualité artisanale.",
   categories: [
