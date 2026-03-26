@@ -69,6 +69,7 @@ export async function POST(request: Request) {
                 <td style="padding: 10px 0; color: #333;">${meta.livraison === 'oui' ? `🚚 Livraison — ${meta.adresse}` : '🏠 Retrait sur place'}</td>
               </tr>
               ${meta.message ? `<tr><td style="padding: 10px 0; color: #999; font-size: 0.8rem; text-transform: uppercase; vertical-align: top;">Note</td><td style="padding: 10px 0; color: #333;">${meta.message}</td></tr>` : ''}
+              ${meta.commentaire ? `<tr><td style="padding: 10px 0; color: #999; font-size: 0.8rem; text-transform: uppercase; vertical-align: top;">Commentaire</td><td style="padding: 10px 0; color: #333;">${meta.commentaire}</td></tr>` : ''}
             </table>
           </div>
           <p style="text-align: center; color: #bbb; font-size: 0.75rem; margin-top: 20px;">cassiora.fr · Paiement traité par Stripe</p>

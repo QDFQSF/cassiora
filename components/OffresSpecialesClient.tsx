@@ -112,12 +112,12 @@ async function submitCheckout(body: object, setStatus: (s: "idle" | "loading" | 
 
 // ─── Modale 1 : Brunch Alliance ────────────────────────────────────────────
 function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
-  const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "" });
+  const [form, setForm] = useState({ nom: "", email: "", telephone: "", date: "", livraison: false, adresse: "", commentaire: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
-  const handle = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const t = e.target;
-    setForm((f) => ({ ...f, [t.name]: t.type === "checkbox" ? t.checked : t.value }));
+    setForm((f) => ({ ...f, [t.name]: t.type === "checkbox" ? (t as HTMLInputElement).checked : t.value }));
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -153,6 +153,10 @@ function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
             </div>
           )}
         </div>
+        <div>
+          <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
+          <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
+        </div>
         <SubmitRow prix="106€" status={status} />
       </form>
     </ModalShell>
@@ -161,7 +165,7 @@ function ModalBrunchAlliance({ onClose }: { onClose: () => void }) {
 
 // ─── Modale 2 : Pack Découverte ─────────────────────────────────────────────
 function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
-  const [form, setForm] = useState({ nom: "", email: "" });
+  const [form, setForm] = useState({ nom: "", email: "", commentaire: "" });
   const [boxId, setBoxId] = useState("brunch");
   const [taille, setTaille] = useState<Taille>("4/6");
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
@@ -169,7 +173,7 @@ function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
   const box = boxes.find((b) => b.id === boxId)!;
   const prix = box.tarifs[taille];
 
-  const handle = (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,6 +201,10 @@ function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
           <span className="text-gold-light text-2xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{prix}€</span>
           <span className="text-cream/40 text-xs ml-2" style={{ fontFamily: "'Jost', sans-serif" }}>+ assortiment sucré offert</span>
         </div>
+        <div>
+          <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
+          <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
+        </div>
         <SubmitRow prix={`${prix}€`} status={status} />
       </form>
     </ModalShell>
@@ -205,7 +213,7 @@ function ModalPackDecouverte({ onClose }: { onClose: () => void }) {
 
 // ─── Modale 3 : Duo Gourmand ────────────────────────────────────────────────
 function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
-  const [form, setForm] = useState({ nom: "", email: "" });
+  const [form, setForm] = useState({ nom: "", email: "", commentaire: "" });
   const [box1Id, setBox1Id] = useState("brunch");
   const [box1Taille, setBox1Taille] = useState<Taille>("4/6");
   const [box2Id, setBox2Id] = useState("pause-sucree");
@@ -218,7 +226,7 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
   const box2Prix = box2.tarifs[box2Taille];
   const totalPrix = Math.round((box1Prix + box2Prix * 0.85) * 100) / 100;
 
-  const handle = (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -269,6 +277,10 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
           <span className="text-gold-light text-2xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{totalPrix}€</span>
           <span className="text-cream/40 text-xs ml-2" style={{ fontFamily: "'Jost', sans-serif" }}>au lieu de {box1Prix + box2Prix}€</span>
         </div>
+        <div>
+          <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
+          <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
+        </div>
         <SubmitRow prix={`${totalPrix}€`} status={status} />
       </form>
     </ModalShell>
@@ -277,10 +289,10 @@ function ModalDuoGourmand({ onClose }: { onClose: () => void }) {
 
 // ─── Modale 4 : Boîte à Goûter ──────────────────────────────────────────────
 function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
-  const [form, setForm] = useState({ nom: "", email: "", telephone: "", adresse: "", dateDebut: "" });
+  const [form, setForm] = useState({ nom: "", email: "", telephone: "", adresse: "", dateDebut: "", commentaire: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
 
-  const handle = (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -303,6 +315,10 @@ function ModalBoiteGouter({ onClose }: { onClose: () => void }) {
           <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Adresse de livraison</label>
           <input type="text" name="adresse" required value={form.adresse} onChange={handle} placeholder="Adresse complète" className={ic} style={{ fontFamily: "'Jost', sans-serif" }} />
           <p className="text-gold/40 text-xs mt-2 italic" style={{ fontFamily: "'Jost', sans-serif" }}>Livraison toutes les deux semaines pour garantir la fraîcheur.</p>
+        </div>
+        <div>
+          <label className={lc} style={{ fontFamily: "'Cinzel', serif" }}>Commentaire (allergies, préférences, substitutions...)</label>
+          <textarea name="commentaire" rows={3} value={form.commentaire} onChange={handle} placeholder="Ex: allergie aux noix, remplacer le roquefort par du chèvre..." className={ic + " resize-none"} style={{ fontFamily: "'Jost', sans-serif" }} />
         </div>
         <SubmitRow prix="36€" status={status} />
       </form>

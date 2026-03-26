@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     let session: Stripe.Checkout.Session
 
     if (offre === 'brunch_alliance') {
-      const { nom, email, telephone, date, livraison, adresse } = body
+      const { nom, email, telephone, date, livraison, adresse, commentaire } = body
       const desc = [
         date && `Date souhaitée : ${date}`,
         livraison ? `Livraison : ${adresse}` : 'Retrait sur place',
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
           date: date || '',
           livraison: livraison ? 'oui' : 'non',
           adresse: adresse || '',
+          commentaire: commentaire || '',
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
       })
 
     } else if (offre === 'pack_decouverte') {
-      const { nom, email, boxNom, taille, prix } = body
+      const { nom, email, boxNom, taille, prix, commentaire } = body
 
       session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -76,6 +77,7 @@ export async function POST(request: Request) {
           nom, email,
           taille,
           boxChoisie: boxNom,
+          commentaire: commentaire || '',
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -83,7 +85,7 @@ export async function POST(request: Request) {
       })
 
     } else if (offre === 'duo_gourmand') {
-      const { nom, email, box1Nom, box1Taille, box1Prix, box2Nom, box2Taille, box2Prix } = body
+      const { nom, email, box1Nom, box1Taille, box1Prix, box2Nom, box2Taille, box2Prix, commentaire } = body
       const total = Math.round((box1Prix + box2Prix * 0.85) * 100)
 
       session = await stripe.checkout.sessions.create({
@@ -108,6 +110,7 @@ export async function POST(request: Request) {
           nom, email,
           box1: `${box1Nom} · ${box1Taille} pers`,
           box2: `${box2Nom} · ${box2Taille} pers (-15%)`,
+          commentaire: commentaire || '',
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
@@ -115,7 +118,7 @@ export async function POST(request: Request) {
       })
 
     } else if (offre === 'boite_gouter') {
-      const { nom, email, telephone, adresse, dateDebut } = body
+      const { nom, email, telephone, adresse, dateDebut, commentaire } = body
 
       session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -145,6 +148,7 @@ export async function POST(request: Request) {
           adresse: adresse || '',
           date: dateDebut || '',
           livraison: 'oui',
+          commentaire: commentaire || '',
         },
         mode: 'payment',
         success_url: `${siteUrl}/commande-confirmee?session_id={CHECKOUT_SESSION_ID}`,
