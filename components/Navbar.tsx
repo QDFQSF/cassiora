@@ -19,16 +19,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hasOffres, setHasOffres] = useState(false);
   const pathname = usePathname();
-
-  // Vérifier si des offres actives existent
-  useEffect(() => {
-    fetch("/api/offres-actives")
-      .then((r) => r.json())
-      .then((d) => setHasOffres(d.hasOffres))
-      .catch(() => setHasOffres(false));
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -61,19 +52,6 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-0.5">
-            {hasOffres && (
-              <Link
-                href="/offres-speciales"
-                className="mr-3 px-4 py-1.5 text-black text-[0.6rem] tracking-[0.2em] uppercase font-medium transition-all duration-300"
-                style={{
-                  fontFamily: "'Cinzel', serif",
-                  background: "linear-gradient(135deg, #c9a84c, #e2ce75)",
-                  clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))",
-                }}
-              >
-                ✦ Offres spéciales
-              </Link>
-            )}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -105,11 +83,6 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div className={`fixed inset-0 z-40 bg-black/98 backdrop-blur-lg flex flex-col items-center justify-center transition-all duration-500 ${menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
         <div className="gold-divider w-32 mb-8" />
-        {hasOffres && (
-          <Link href="/offres-speciales" className="mb-6 px-8 py-3 text-black text-[0.7rem] tracking-[0.25em] uppercase" style={{ fontFamily: "'Cinzel', serif", background: "linear-gradient(135deg, #c9a84c, #e2ce75)" }}>
-            ✦ Offres spéciales
-          </Link>
-        )}
         <div className="flex flex-col items-center gap-6">
           {navLinks.map((link) => (
             <Link
