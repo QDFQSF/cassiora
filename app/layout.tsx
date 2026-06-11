@@ -62,40 +62,42 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // Données structurées JSON-LD pour Google (fiche entreprise locale)
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "FoodEstablishment",
+    "@type": ["FoodEstablishment", "LocalBusiness"],
     name: "Cassiora Traiteur",
     description:
-      "Traiteur artisanal proposant des prestations sur mesure, box gourmandes et ateliers culinaires dans le Lot et Tarn-et-Garonne.",
-    url: siteUrl,
-    logo: `${siteUrl}/images/logo.png`,
-    image: `${siteUrl}/images/logo.png`,
-    telephone: "", // À compléter
+      "Traiteur artisanal dans le Lot et Tarn-et-Garonne. Buffets, cocktails dînatoires, menus sur-mesure pour mariages, anniversaires et événements professionnels.",
+    url: "https://www.cassiora.fr",
     email: "cassioratraiteur@gmail.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "40 Chemin de la fontaine",
+      streetAddress: "40 Chemin de la Fontaine",
       addressLocality: "Saint-Paul-de-Loubressac",
       postalCode: "46170",
       addressCountry: "FR",
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "44.4",
-      longitude: "1.5",
-    },
     areaServed: [
-      { "@type": "City", name: "Cahors" },
-      { "@type": "City", name: "Montauban" },
-      { "@type": "City", name: "Caussade" },
-      { "@type": "AdministrativeArea", name: "Lot" },
-      { "@type": "AdministrativeArea", name: "Tarn-et-Garonne" },
+      "Cahors",
+      "Montauban",
+      "Caussade",
+      "Figeac",
+      "Gourdon",
+      "Villefranche-de-Rouergue",
+      "Moissac",
+      "Castelsarrasin",
+      "Lot",
+      "Tarn-et-Garonne",
     ],
-    servesCuisine: ["Française", "Artisanale", "Gastronomique"],
+    servesCuisine: "Française artisanale",
     priceRange: "€€",
-    sameAs: ["https://www.instagram.com/cassiora_traiteur"],
+    sameAs: "https://www.instagram.com/cassiora.traiteur",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "09:00",
+      closes: "20:00",
+    },
   };
 
   return (
