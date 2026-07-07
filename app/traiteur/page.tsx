@@ -13,9 +13,9 @@ const buffetFroid = {
     { nom: "Desserts & douceurs", items: ["Verrine sablée au fruit de saison", "Crumble aux pommes", "Moelleux au chocolat", "Salade de fruits frais de saison — pomme, poire, clémentine"] },
   ],
   formules: [
-    { nom: "La Classique", prix: 16, contenu: "2 salades + 1 viande froide + 1 dessert au choix" },
-    { nom: "Le Gourmand", prix: 22, contenu: "3 salades + 2 viandes froides + plateau de fromage + 1 dessert", highlight: true },
-    { nom: "Le Grand Buffet", prix: 28, contenu: "4 salades + 3 viandes froides + plateau de fromages + 2 desserts" },
+    { nom: "La Classique", prix: 18, contenu: "2 salades + 1 viande froide + 1 dessert au choix" },
+    { nom: "Le Gourmand", prix: 24, contenu: "3 salades + 2 viandes froides + plateau de fromage + 1 dessert", highlight: true },
+    { nom: "Le Grand Buffet", prix: 30, contenu: "4 salades + 3 viandes froides + plateau de fromages + 2 desserts" },
   ],
 };
 
@@ -30,9 +30,9 @@ const cocktailDinatoire = {
     { nom: "Mignardises sucrées", items: ["Crumble pomme cannelle", "Verrine panna cotta — vanille & coulis de fruits rouges", "Verrine tiramisu spéculoos", "Financier amande — doré au four", "Moelleux chocolat — fondant", "Brochette de fruits frais", "Verrine citron meringuée"] },
   ],
   formules: [
-    { nom: "Formule Découverte", prix: 14, contenu: "6 pièces salées + 3 sucrées" },
-    { nom: "Formule Plaisir", prix: 20, contenu: "9 pièces salées + 4 sucrées", highlight: true },
-    { nom: "Formule Prestige", prix: 26, contenu: "12 pièces salées + 5 sucrées" },
+    { nom: "Formule Découverte", prix: 16, contenu: "6 pièces salées + 3 sucrées" },
+    { nom: "Formule Plaisir", prix: 22, contenu: "9 pièces salées + 4 sucrées", highlight: true },
+    { nom: "Formule Prestige", prix: 28, contenu: "12 pièces salées + 5 sucrées" },
   ],
 };
 
@@ -186,6 +186,7 @@ export default function TraiteurPage() {
                             <p className="text-cream/40 text-xs leading-relaxed" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>{f.contenu}</p>
                           </div>
                           <div className="text-right flex-shrink-0">
+                            <span className="text-cream/30 text-[0.65rem] block mb-0.5" style={{ fontFamily: "'Jost', sans-serif" }}>à partir de</span>
                             <span className="text-gold-light text-2xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{f.prix}€</span>
                             <span className="text-cream/30 text-xs block" style={{ fontFamily: "'Jost', sans-serif" }}>/pers</span>
                           </div>

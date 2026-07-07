@@ -1,0 +1,41 @@
+╔══════════════════════════════════════════════════════╗
+║           CASSIORA TRAITEUR — App Devis/Factures     ║
+╚══════════════════════════════════════════════════════╝
+
+INSTALLATION (une seule fois)
+──────────────────────────────
+1. Copiez le dossier "cassiora" sur votre Bureau (ou ailleurs)
+2. Vérifiez que Python est installé sur votre PC :
+   → Ouvrez un terminal (touche Windows + R → tapez "cmd") 
+   → Tapez : python --version
+   → Si ça affiche "Python 3.x.x" c'est bon
+   → Sinon, téléchargez Python sur https://www.python.org/downloads/
+     ⚠ Cochez "Add Python to PATH" pendant l'installation !
+
+UTILISATION
+───────────
+→ Double-cliquez sur "Cassiora.bat"
+→ Une fenêtre noire s'ouvre (c'est le serveur, ne la fermez pas)
+→ Votre navigateur s'ouvre automatiquement sur l'application
+→ Tous vos devis/factures sont sauvegardés dans le dossier "docs/"
+
+POUR ARRÊTER
+────────────
+→ Fermez la fenêtre noire (Cassiora.bat)
+
+STRUCTURE DU DOSSIER
+────────────────────
+cassiora/
+├── Cassiora.bat     ← double-cliquez pour lancer
+├── server.py        ← le serveur (ne pas modifier)
+├── index.html       ← l'application
+├── LISEZ-MOI.txt    ← ce fichier
+└── docs/            ← vos devis et factures (JSON)
+     ├── doc_xxx.json
+     └── doc_yyy.json
+
+SAUVEGARDE
+──────────
+Vos documents sont dans le dossier "docs/".
+Pour les sauvegarder, copiez simplement tout le dossier "cassiora".
+

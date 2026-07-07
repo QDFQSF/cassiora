@@ -8,9 +8,9 @@ export type TraiteurLocalData = {
 };
 
 const formules = [
-  { nom: "La Classique", prix: 16, contenu: "2 salades + 1 viande froide + 1 dessert au choix" },
-  { nom: "Le Gourmand", prix: 22, contenu: "3 salades + 2 viandes froides + plateau de fromage + 1 dessert", highlight: true },
-  { nom: "Le Grand Buffet", prix: 28, contenu: "4 salades + 3 viandes froides + plateau de fromages + 2 desserts" },
+  { nom: "La Classique", prix: 18, contenu: "2 salades + 1 viande froide + 1 dessert au choix" },
+  { nom: "Le Gourmand", prix: 24, contenu: "3 salades + 2 viandes froides + plateau de fromage + 1 dessert", highlight: true },
+  { nom: "Le Grand Buffet", prix: 30, contenu: "4 salades + 3 viandes froides + plateau de fromages + 2 desserts" },
 ];
 
 export default function TraiteurLocalPage({ data }: { data: TraiteurLocalData }) {
@@ -94,6 +94,9 @@ export default function TraiteurLocalPage({ data }: { data: TraiteurLocalData })
                   {f.contenu}
                 </p>
                 <div>
+                  <span className="text-cream/30 text-[0.65rem] block mb-1" style={{ fontFamily: "'Jost', sans-serif" }}>
+                    à partir de
+                  </span>
                   <span className="text-gold-light text-3xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {f.prix}€
                   </span>

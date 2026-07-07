@@ -1,0 +1,44 @@
+{
+  "id": "doc_1781122406331",
+  "docType": "devis",
+  "paid": false,
+  "dnum": "DEV-2026-433",
+  "ddate": "2026-06-10",
+  "cnom": "Louis Poujol",
+  "ctel": "0631133947",
+  "cemail": "LouisPoujol@hotmail.com",
+  "cadr": "40 CHEMIN DE LA FONTAINE",
+  "etype": "Anniversaire",
+  "edate": "2026-06-30",
+  "econv": "2",
+  "elieu": "Maison",
+  "tva": "0",
+  "cond": "Acompte de 30% à la signature du devis. Solde à régler 7 jours avant l'événement. Paiement par virement ou espèces.",
+  "rem": "",
+  "origine": "",
+  "cats": [
+    {
+      "id": 1,
+      "titre": "Mousse au chocolat ",
+      "prix": 310,
+      "designations": [
+        {
+          "id": 1,
+          "desc": "et lait au chocolat "
+        }
+      ]
+    }
+  ],
+  "acs": [
+    {
+      "id": 1,
+      "label": "Acompte à la signature",
+      "type": "eur",
+      "val": 1
+    }
+  ],
+  "catId": 1,
+  "desId": 1,
+  "acId": 1,
+  "savedAt": 1781170430057
+}
